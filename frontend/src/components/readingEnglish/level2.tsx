@@ -34,14 +34,13 @@ const ReadingLevel2 = () => {
 
     recognition.start();
 
-    // If no result within 7 seconds, stop recognition
     const timeoutId = setTimeout(() => {
       recognition.stop();
       setResult('⚠️ Timeout. Please try again.');
       setIsListening(false);
     }, 7000);
 
-    recognition.onresult = async (event) => {
+    recognition.onresult = async (event: any) => {
       clearTimeout(timeoutId);
       const spoken = event.results[0][0].transcript.toLowerCase();
       console.log('User said:', spoken);
@@ -60,7 +59,7 @@ const ReadingLevel2 = () => {
       setIsListening(false);
     };
 
-    recognition.onerror = (e) => {
+    recognition.onerror = (e: any) => {
       clearTimeout(timeoutId);
       console.error('Speech error:', e);
       setResult('❌ Speech recognition failed.');
@@ -75,11 +74,34 @@ const ReadingLevel2 = () => {
     };
   };
 
-  // TTS Functionality - Text to Speech
   const handleTextToSpeech = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/tts', { text: word });
-      const audioUrl = URL.createObjectURL(res.data); // Create a URL for the audio response
+      const res = await axios.post(
+        'https://api.magicapi.dev/api/v1/sarvam/ai-models/text-to-speech',
+        {
+          
+          inputs: [word],
+          target_language_code: 'hi-IN',
+          speaker: 'meera',
+          pitch: 0,
+          pace: 1,
+          loudness: 1,
+          speech_sample_rate: 16000,
+          enable_preprocessing: true,
+          model: 'bulbul:v1',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-magicapi-key': 'cm9dcve2v0009l2047m9kothl', // 🔑 Replace this with your actual key
+            accept: 'application/json',
+          },
+          responseType: 'blob', // to get audio file
+        }
+      );
+
+      const audioBlob = new Blob([res.data], { type: 'audio/mpeg' });
+      const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
       audio.play();
     } catch (err) {
@@ -133,7 +155,6 @@ const ReadingLevel2 = () => {
           🔁 New Word
         </button>
 
-        {/* Button to trigger Text-to-Speech */}
         <button
           onClick={handleTextToSpeech}
           className="mt-4 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full transition-all"
