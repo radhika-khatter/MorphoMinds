@@ -1,8 +1,10 @@
-import random
+import os
 import csv
+import random
+CSV_PATH = os.path.join(os.path.dirname(__file__), 'google-10000-english2.csv')
 
 def get_random_word_2letter():
-    with open('MorphoMinds/Word_Reading/google-10000-english.csv', 'r') as file:
+    with open(CSV_PATH, 'r') as file:
         reader = csv.reader(file)
         word_list = [row[0] for row in reader if row]  # Assuming each row has one word
         x = 0
@@ -15,7 +17,7 @@ def get_random_word_2letter():
                 continue
 
 def get_random_word_3to5letter():
-    with open('MorphoMinds/Word_Reading/google-10000-english.csv', 'r') as file:
+    with open(CSV_PATH, 'r') as file:
         reader = csv.reader(file)
         word_list = [row[0] for row in reader if row]  # Assuming each row has one word
         x = 0
@@ -28,7 +30,7 @@ def get_random_word_3to5letter():
                 continue
 
 def get_random_word_6to8letter():
-    with open('MorphoMinds/Word_Reading/google-10000-english.csv', 'r') as file:
+    with open(CSV_PATH, 'r') as file:
         reader = csv.reader(file)
         word_list = [row[0] for row in reader if row]  # Assuming each row has one word
         x = 0
@@ -41,7 +43,7 @@ def get_random_word_6to8letter():
                 continue
 
 def get_random_word_9letter():
-    with open('MorphoMinds/Word_Reading/google-10000-english.csv', 'r') as file:
+    with open(CSV_PATH, 'r') as file:
         reader = csv.reader(file)
         word_list = [row[0] for row in reader if row]  # Assuming each row has one word
         x = 0

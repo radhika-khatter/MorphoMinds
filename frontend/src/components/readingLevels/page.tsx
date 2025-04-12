@@ -32,7 +32,7 @@ const ReadingLevels = () => {
           Reading Levels - {subjectName}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Level 1 */}
           <div
             className="p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 cursor-pointer hover:shadow-xl transition"
@@ -55,6 +55,18 @@ const ReadingLevels = () => {
               Move on to reading short words and understanding sentence flow.
             </p>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Progress: 45%</p>
+          </div>
+
+          {/* Level 3 */}
+          <div
+            className="p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 cursor-pointer hover:shadow-xl transition"
+            onClick={() => navigate(`/${folderPrefix}/level3`)}
+          >
+            <h3 className="text-xl font-semibold text-purple-500 mb-2">Level 3: Speak the Word</h3>
+            <p className="text-gray-700 dark:text-gray-300">
+              Speak out random two-letter words and check your pronunciation.
+            </p>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Progress: 20%</p>
           </div>
         </div>
       </div>

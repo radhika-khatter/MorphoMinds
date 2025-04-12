@@ -1,229 +1,120 @@
-import { useState, useEffect, useRef } from "react";
-import { Mic, MicOff, Loader2 } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-// Web Speech API typings
 declare global {
   interface Window {
-    webkitSpeechRecognition: any;
     SpeechRecognition: any;
+    webkitSpeechRecognition: any;
   }
 }
 
-interface ISpeechRecognition extends EventTarget {
-  continuous: boolean;
-  interimResults: boolean;
-  lang: string;
-  maxAlternatives: number;
-  start(): void;
-  stop(): void;
-  abort(): void;
-  onstart: (() => void) | null;
-  onresult: ((event: SpeechRecognitionEvent) => void) | null;
-  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
-  onend: (() => void) | null;
-}
-
-interface SpeechRecognitionEvent extends Event {
-  results: SpeechRecognitionResultList;
-}
-
-interface SpeechRecognitionResultList {
-  [index: number]: SpeechRecognitionResult;
-  length: number;
-}
-
-interface SpeechRecognitionResult {
-  [index: number]: SpeechRecognitionAlternative;
-  length: number;
-  isFinal: boolean;
-}
-
-interface SpeechRecognitionAlternative {
-  transcript: string;
-  confidence: number;
-}
-
-interface SpeechRecognitionErrorEvent extends Event {
-  error: string;
-}
-
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
 const ReadingLevel1 = () => {
-  const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
-  const [recognizedLetter, setRecognizedLetter] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState<string | null>(null);
+  const [word, setWord] = useState('');
   const [isListening, setIsListening] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [result, setResult] = useState('');
 
-  const recognitionRef = useRef<ISpeechRecognition | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const fetchWord = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/get-word?level=1');
+      setWord(res.data.word);
+      setResult('');
+    } catch (err) {
+      console.error('Error fetching word:', err);
+    }
+  };
 
-  useEffect(() => {
-    const SpeechRecognitionConstructor =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognitionConstructor) {
-      alert("Speech recognition is not supported in this browser.");
+  const startListening = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Speech Recognition not supported in this browser.');
       return;
     }
 
-    const recognition: ISpeechRecognition = new SpeechRecognitionConstructor();
-    recognition.continuous = false;
-    recognition.lang = "en-US";
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
-    recognition.onstart = () => {
-      setIsListening(true);
-      setIsProcessing(false);
+    setIsListening(true);
+    setResult('🎤 Listening...');
+
+    recognition.start();
+
+    const timeoutId = setTimeout(() => {
+      recognition.stop();
+      setResult('⚠️ Timeout. Please try again.');
+      setIsListening(false);
+    }, 7000);
+
+    recognition.onresult = async (event) => {
+      clearTimeout(timeoutId);
+      const spoken = event.results[0][0].transcript.toLowerCase().trim();
+      const correct = spoken === word.toLowerCase().trim();
+      setResult(correct ? '✅ Correct!' : `❌ Incorrect. You said: "${spoken}"`);
+      setIsListening(false);
     };
 
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const transcript = event.results[0][0].transcript.trim().toUpperCase();
-      const firstChar = transcript.charAt(0);
-
-      setRecognizedLetter(firstChar);
+    recognition.onerror = (event) => {
+      clearTimeout(timeoutId);
+      console.error('Speech recognition error', event.error);
+      setResult('❌ Error during recognition');
       setIsListening(false);
-      setIsProcessing(false);
-
-      if (firstChar === selectedLetter) {
-        setFeedback("✅ Correct!");
-      } else {
-        setFeedback(`❌ You said "${firstChar}". Try again.`);
-      }
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
-
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      setIsListening(false);
-      setIsProcessing(false);
-      setFeedback(`⚠️ Error: ${event.error}`);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
     };
 
     recognition.onend = () => {
-      setIsListening(false);
-      if (!recognizedLetter && !feedback) {
-        setFeedback("⚠️ No speech detected. Please try again.");
+      if (isListening) {
+        setResult('⚠️ No speech detected. Try again.');
+        setIsListening(false);
       }
     };
-
-    recognitionRef.current = recognition;
-
-    return () => {
-      recognition.stop();
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [selectedLetter]);
-
-  const startListening = () => {
-    if (!recognitionRef.current || !selectedLetter) return;
-
-    setFeedback(null);
-    setRecognizedLetter(null);
-    setIsProcessing(true);
-
-    try {
-      recognitionRef.current.start();
-
-      timeoutRef.current = setTimeout(() => {
-        if (isListening) {
-          recognitionRef.current?.stop();
-          setIsListening(false);
-          setIsProcessing(false);
-          setFeedback("⚠️ Took too long. Please try again.");
-        }
-      }, 5000);
-    } catch (error) {
-      setIsProcessing(false);
-      setFeedback("⚠️ Error starting speech recognition. Please try again.");
-    }
   };
 
-  const handleLetterClick = (letter: string) => {
-    setSelectedLetter(letter);
-    setRecognizedLetter(null);
-    setFeedback(null);
-    setIsListening(false);
-    setIsProcessing(false);
-
-    if (recognitionRef.current) recognitionRef.current.abort();
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-  };
+  useEffect(() => {
+    fetchWord();
+  }, []);
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">
-        Reading Practice - Level 1 (Letters)
-      </h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-white p-6 font-dyslexic">
+      <h1 className="text-3xl font-bold text-blue-700 mb-6 font-dyslexic">Reading Practice - Level 1</h1>
 
-      <div className="flex flex-wrap justify-center gap-2 mb-8">
-        {letters.map((letter) => (
-          <button
-            key={letter}
-            onClick={() => handleLetterClick(letter)}
-            className={`px-4 py-2 rounded border shadow transition ${
-              selectedLetter === letter
-                ? "bg-blue-200 border-blue-500"
-                : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md text-center space-y-4 font-dyslexic">
+        <p className="text-lg text-gray-700 font-dyslexic ">🔊 Read the letter aloud:</p>
+
+        <div className="text-6xl font-extrabold text-blue-600 tracking-wider font-dyslexic">
+          {word || '...'}
+        </div>
+
+        <button
+          onClick={startListening}
+          disabled={isListening}
+          className={`w-full px-6 py-2 rounded-full font-semibold text-white transition-all duration-200 font-dyslexic ${
+            isListening ? 'bg-yellow-500 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+          }`}
+        >
+          🎤 {isListening ? 'Listening...' : 'Start Speaking'}
+        </button>
+
+        {result && (
+          <p
+            className={`text-lg font-medium rounded-xl p-3 w-full ${
+              result.includes('✅') ? 'text-green-600 bg-green-50' :
+              result.includes('❌') ? 'text-red-600 bg-red-50' :
+              'text-yellow-700 bg-yellow-100'
             }`}
           >
-            {letter}
-          </button>
-        ))}
+            {result}
+          </p>
+        )}
+
+        <button
+          onClick={fetchWord}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition-all"
+        >
+          🔁 Get New Letter
+        </button>
       </div>
-
-      {selectedLetter && (
-        <div className="text-center mt-8">
-          <p className="text-2xl mb-4">Say this letter:</p>
-          <div className="text-6xl font-bold mb-4 text-purple-600">
-            {selectedLetter}
-          </div>
-
-          <button
-            onClick={startListening}
-            className="flex items-center justify-center gap-2 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition mx-auto"
-            disabled={isListening || isProcessing}
-          >
-            {isListening ? (
-              <>
-                <MicOff className="animate-pulse" />
-                Listening...
-              </>
-            ) : isProcessing ? (
-              <>
-                <Loader2 className="animate-spin" />
-                Processing...
-              </>
-            ) : (
-              <>
-                <Mic />
-                Start Speaking
-              </>
-            )}
-          </button>
-
-          {feedback && (
-            <div className="mt-6 text-xl font-semibold text-center text-gray-800 dark:text-white">
-              {feedback}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 };
 
 export default ReadingLevel1;
-

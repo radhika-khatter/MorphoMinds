@@ -24,3 +24,4 @@ const Instructions = ({ onStart }: { onStart: () => void }) => {
 
 export default Instructions;
 
+
