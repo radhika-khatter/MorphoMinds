@@ -1,0 +1,11 @@
+Worst classes by recall:
+lower_f: 0.065
+lower_c: 0.069
+lower_m: 0.073
+lower_o: 0.088
+lower_s: 0.121
+lower_u: 0.274
+lower_v: 0.406
+lower_p: 0.410
+upper_I: 0.496
+lower_y: 0.501

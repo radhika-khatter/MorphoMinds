@@ -1,0 +1,288 @@
+/* ==================================================================
+   Board Content — reusable classes for content inside the SignBoard
+   ================================================================== */
+
+/* ---------- Titles ---------- */
+.board-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 2px 2px 0 #6b3a1f;
+    text-align: center;
+    margin-bottom: 6px;
+    font-family: 'OpenDyslexic', sans-serif;
+}
+
+.dark .board-title {
+    color: #f0e6d0;
+    text-shadow: 2px 2px 0 #2a1a0a;
+}
+
+.board-subtitle {
+    font-size: 0.9rem;
+    color: #fef3e0;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.dark .board-subtitle {
+    color: rgba(240, 230, 208, 0.7);
+}
+
+/* ---------- Board section / full-width column layout ---------- */
+.board-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Sketchy Cards (FAQ items, level cards, etc.) ---------- */
+.board-card {
+    position: relative;
+    padding: 16px 18px;
+    border-radius: 10px;
+    z-index: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-family: 'OpenDyslexic', sans-serif;
+}
+
+.board-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    border: 3px solid rgba(107, 58, 31, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+    filter: url(#sketchy-light);
+    z-index: -1;
+}
+
+.board-card:hover {
+    transform: translateY(-2px);
+}
+
+.dark .board-card::before {
+    border-color: rgba(180, 140, 80, 0.25);
+    background: rgba(90, 66, 48, 0.25);
+}
+
+.board-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 4px;
+}
+
+.dark .board-card-title {
+    color: #f0e6d0;
+    text-shadow: 1px 1px 0 #2a1a0a;
+}
+
+.board-card-text {
+    font-size: 0.82rem;
+    color: #fef3e0;
+    line-height: 1.5;
+}
+
+.dark .board-card-text {
+    color: rgba(240, 230, 208, 0.6);
+}
+
+.board-card-meta {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 6px;
+}
+
+.dark .board-card-meta {
+    color: rgba(240, 230, 208, 0.4);
+}
+
+/* ---------- Form Inputs inside board (contact forms, etc.) ---------- */
+.board-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #fef3e0;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.dark .board-label {
+    color: rgba(240, 230, 208, 0.7);
+}
+
+.board-textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: #3b2a1a;
+    font-size: 0.88rem;
+    font-family: 'OpenDyslexic', sans-serif;
+    outline: none;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.dark .board-textarea {
+    color: #f0e6d0;
+}
+
+.board-textarea::placeholder {
+    color: #a08060;
+}
+
+.dark .board-textarea::placeholder {
+    color: rgba(200, 175, 130, 0.5);
+}
+
+/* ---------- Board Button (primary action) ---------- */
+.board-btn {
+    position: relative;
+    display: inline-block;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    font-family: 'OpenDyslexic', sans-serif;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+    background: transparent;
+    color: #4a2515;
+    z-index: 1;
+    text-decoration: none;
+    text-align: center;
+}
+
+.board-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    border: 3px solid #4a2515;
+    background: #e8a838;
+    box-shadow: 2px 3px 0 #4a2515;
+    filter: url(#sketchy-light);
+    z-index: -1;
+    transition: box-shadow 0.25s ease;
+}
+
+.board-btn:hover {
+    transform: translateY(-2px);
+}
+
+.board-btn:hover::before {
+    box-shadow: 2px 5px 0 #4a2515;
+}
+
+.board-btn:active {
+    transform: translateY(1px);
+}
+
+.board-btn:active::before {
+    box-shadow: 1px 1px 0 #4a2515;
+}
+
+.board-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.dark .board-btn {
+    color: #1a0f05;
+}
+
+.dark .board-btn::before {
+    background: #b48c50;
+    border-color: #2a1a0a;
+    box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+/* ---------- Board Link ---------- */
+.board-link {
+    color: #e8a838;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.board-link:hover {
+    color: #fff;
+}
+
+.dark .board-link {
+    color: #b48c50;
+}
+
+.dark .board-link:hover {
+    color: #f0e6d0;
+}
+
+/* ---------- Two-column card grid ---------- */
+.board-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+@media (max-width: 600px) {
+    .board-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .board-title {
+        font-size: 1.4rem;
+    }
+}
+
+/* ---------- Settings-style row ---------- */
+.board-settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(107, 58, 31, 0.2);
+}
+
+.board-settings-row:last-child {
+    border-bottom: none;
+}
+
+.dark .board-settings-row {
+    border-bottom-color: rgba(180, 140, 80, 0.15);
+}
+
+.board-settings-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.dark .board-settings-label {
+    color: #f0e6d0;
+}
+
+.board-settings-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 2px;
+}
+
+.dark .board-settings-desc {
+    color: rgba(240, 230, 208, 0.4);
+}

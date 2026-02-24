@@ -1,0 +1,303 @@
+/* ==================================================================
+   NavBar
+   Desktop:  [Title]  ···  [wooden slab: ← → | 👤]  ···  [☀/🌙]
+   Mobile:   [slab: ←]  [Title]  [☰]
+   ================================================================== */
+
+.navbar {
+    position: relative;
+    z-index: 45;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 24px;
+    box-sizing: border-box;
+    font-family: 'OpenDyslexic', sans-serif;
+}
+
+/* ---------- Title ---------- */
+.navbar-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 2px 2px 0 #6b3a1f;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.dark .navbar-title {
+    color: #f0e6d0;
+    text-shadow: 2px 2px 0 #2a1a0a;
+}
+
+/* ---------- Wooden Slab ---------- */
+.navbar-slab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+/* Center the slab on desktop */
+@media (min-width: 769px) {
+    .navbar-slab:not(.navbar-slab-mobile) {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.navbar-slab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #c89445;
+    border: 3px solid #6b3a1f;
+    border-radius: 12px;
+    box-shadow: 2px 3px 0 #6b3a1f;
+    filter: url(#sketchy);
+    z-index: -1;
+}
+
+.dark .navbar-slab::before {
+    background: #5a4230;
+    border-color: #3a2818;
+    box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+/* ---------- Slab Buttons — raised wooden look ---------- */
+.navbar-slab-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 2.5px solid #6b3a1f;
+    background: #d4a056;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 1px 2px 0 #6b3a1f;
+    z-index: 1;
+}
+
+.navbar-slab-btn:hover:not(:disabled) {
+    background: #deb06a;
+    transform: translateY(-2px);
+    box-shadow: 1px 4px 0 #6b3a1f;
+}
+
+.navbar-slab-btn:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 0 0 #6b3a1f;
+}
+
+.navbar-slab-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.dark .navbar-slab-btn {
+    background: #7a5a38;
+    border-color: #3a2818;
+    color: #f0e6d0;
+    box-shadow: 1px 2px 0 #2a1a0a;
+}
+
+.dark .navbar-slab-btn:hover:not(:disabled) {
+    background: #8d6a44;
+    box-shadow: 1px 4px 0 #2a1a0a;
+}
+
+.navbar-slab-divider {
+    width: 2px;
+    height: 24px;
+    margin: 0 2px;
+    border-radius: 1px;
+    background: rgba(107, 58, 31, 0.3);
+}
+
+.dark .navbar-slab-divider {
+    background: rgba(180, 140, 80, 0.2);
+}
+
+/* ---------- Theme Toggle Button (desktop, right side) ---------- */
+.navbar-theme-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    transition: transform 0.3s ease;
+    filter: url(#sketchy-heavy);
+}
+
+.navbar-theme-btn:hover {
+    transform: scale(1.1);
+}
+
+.navbar-theme-btn svg {
+    width: 80px;
+    height: 80px;
+}
+
+/* ---------- Hamburger Button (mobile, right side) ---------- */
+.navbar-hamburger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 2.5px solid #6b3a1f;
+    background: #d4a056;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 1px 2px 0 #6b3a1f;
+    transition: all 0.15s ease;
+    z-index: 1;
+}
+
+.navbar-hamburger::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 10px;
+    border: 3px solid #6b3a1f;
+    background: #c89445;
+    box-shadow: 2px 3px 0 #6b3a1f;
+    filter: url(#sketchy);
+    z-index: -1;
+}
+
+.dark .navbar-hamburger {
+    background: #7a5a38;
+    border-color: #3a2818;
+    color: #f0e6d0;
+    box-shadow: 1px 2px 0 #2a1a0a;
+}
+
+.dark .navbar-hamburger::before {
+    background: #5a4230;
+    border-color: #3a2818;
+    box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+/* ---------- Responsive visibility ---------- */
+.navbar-desktop-only {
+    display: flex;
+}
+
+.navbar-mobile-only {
+    display: none;
+}
+
+/* ---------- Mobile Dropdown ---------- */
+.navbar-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 16px;
+    z-index: 100;
+    background: #d4a056;
+    border: 3px solid #6b3a1f;
+    border-radius: 10px;
+    box-shadow: 3px 4px 0 #6b3a1f;
+    filter: url(#sketchy);
+    overflow: hidden;
+    min-width: 170px;
+    animation: navbar-dropdown-in 0.15s ease-out;
+}
+
+@keyframes navbar-dropdown-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dark .navbar-dropdown {
+    background: #5a4230;
+    border-color: #3a2818;
+    box-shadow: 3px 4px 0 #2a1a0a;
+}
+
+.navbar-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-family: 'OpenDyslexic', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.navbar-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-dropdown-item+.navbar-dropdown-item {
+    border-top: 2px dashed rgba(107, 58, 31, 0.2);
+}
+
+.dark .navbar-dropdown-item {
+    color: #f0e6d0;
+}
+
+.dark .navbar-dropdown-item+.navbar-dropdown-item {
+    border-top-color: rgba(180, 140, 80, 0.15);
+}
+
+/* ================================================================
+   RESPONSIVE — mobile (≤768px)
+   ================================================================ */
+@media (max-width: 768px) {
+    .navbar-desktop-only {
+        display: none !important;
+    }
+
+    .navbar-mobile-only {
+        display: flex;
+    }
+
+    .navbar-title {
+        font-size: 1.15rem;
+    }
+
+    .navbar {
+        padding: 10px 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 0.95rem;
+    }
+
+    .navbar-slab-btn {
+        width: 32px;
+        height: 32px;
+    }
+}

@@ -1,0 +1,347 @@
+/* ==================================================================
+   Profile Popup — centered modal with dark overlay
+   ================================================================== */
+
+/* ---------- Overlay ---------- */
+.profile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: profile-overlay-in 0.2s ease-out;
+}
+
+@keyframes profile-overlay-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ---------- Popup Card ---------- */
+.profile-popup {
+    position: relative;
+    width: 90%;
+    max-width: 380px;
+    padding: 32px 28px 24px;
+    border-radius: 14px;
+    font-family: 'OpenDyslexic', sans-serif;
+    z-index: 1;
+    animation: profile-popup-in 0.25s ease-out;
+}
+
+@keyframes profile-popup-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.profile-popup::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #d4a056;
+    border: 4px solid #6b3a1f;
+    border-radius: 14px;
+    box-shadow: 4px 6px 0 #6b3a1f;
+    filter: url(#sketchy);
+    z-index: -1;
+}
+
+.dark .profile-popup::before {
+    background: #5a4230;
+    border-color: #3a2818;
+    box-shadow: 4px 6px 0 #2a1a0a;
+}
+
+/* dashed inner border */
+.profile-popup::after {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 2px dashed rgba(107, 58, 31, 0.15);
+    border-radius: 10px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.dark .profile-popup::after {
+    border-color: rgba(180, 140, 80, 0.1);
+}
+
+/* ---------- Nails ---------- */
+.profile-nail {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #8b8b8b;
+    border-radius: 50%;
+    border: 2px solid #555;
+    z-index: 2;
+}
+
+.profile-nail-tl {
+    top: 8px;
+    left: 8px;
+}
+
+.profile-nail-tr {
+    top: 8px;
+    right: 8px;
+}
+
+.profile-nail-bl {
+    bottom: 8px;
+    left: 8px;
+}
+
+.profile-nail-br {
+    bottom: 8px;
+    right: 8px;
+}
+
+.dark .profile-nail {
+    background: #5a5a5a;
+    border-color: #333;
+}
+
+/* ---------- Close Button ---------- */
+.profile-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 2px solid #6b3a1f;
+    background: #c89445;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 1px 2px 0 #6b3a1f;
+    transition: all 0.15s ease;
+    z-index: 3;
+}
+
+.profile-close:hover {
+    background: #deb06a;
+    transform: translateY(-1px);
+    box-shadow: 1px 3px 0 #6b3a1f;
+}
+
+.dark .profile-close {
+    background: #7a5a38;
+    border-color: #3a2818;
+    color: #f0e6d0;
+    box-shadow: 1px 2px 0 #2a1a0a;
+}
+
+/* ---------- Avatar Section ---------- */
+.profile-avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #e8a838;
+    border: 3px solid #6b3a1f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #4a2515;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: 2px 3px 0 #6b3a1f;
+    margin-bottom: 10px;
+}
+
+.dark .profile-avatar {
+    background: #b48c50;
+    border-color: #3a2818;
+    color: #1a0f05;
+    box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+.profile-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 1px 2px 0 #6b3a1f;
+    margin: 0;
+}
+
+.dark .profile-name {
+    color: #f0e6d0;
+    text-shadow: 1px 2px 0 #2a1a0a;
+}
+
+.profile-email {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 2px;
+}
+
+.dark .profile-email {
+    color: rgba(240, 230, 208, 0.4);
+}
+
+.profile-loading {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Info Rows ---------- */
+.profile-info {
+    margin-bottom: 14px;
+}
+
+.profile-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 2px dashed rgba(107, 58, 31, 0.15);
+}
+
+.profile-info-row:last-child {
+    border-bottom: none;
+}
+
+.dark .profile-info-row {
+    border-bottom-color: rgba(180, 140, 80, 0.1);
+}
+
+.profile-info-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.dark .profile-info-label {
+    color: rgba(240, 230, 208, 0.45);
+}
+
+.profile-info-value {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dark .profile-info-value {
+    color: #f0e6d0;
+}
+
+/* ---------- Navigation Items ---------- */
+.profile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+    border-top: 2px dashed rgba(107, 58, 31, 0.15);
+    padding-top: 12px;
+}
+
+.dark .profile-nav {
+    border-top-color: rgba(180, 140, 80, 0.1);
+}
+
+.profile-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #fff;
+    font-family: 'OpenDyslexic', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.profile-nav-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.dark .profile-nav-item {
+    color: #f0e6d0;
+}
+
+/* ---------- Logout ---------- */
+.profile-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2.5px solid #6b3a1f;
+    background: rgba(200, 60, 40, 0.7);
+    color: #fff;
+    font-family: 'OpenDyslexic', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 1px 2px 0 #6b3a1f;
+    transition: all 0.15s ease;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.profile-logout:hover {
+    background: rgba(200, 60, 40, 0.85);
+    transform: translateY(-1px);
+    box-shadow: 1px 3px 0 #6b3a1f;
+}
+
+.dark .profile-logout {
+    border-color: #3a2818;
+    box-shadow: 1px 2px 0 #2a1a0a;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+    .profile-popup {
+        padding: 28px 20px 20px;
+    }
+
+    .profile-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+    }
+
+    .profile-name {
+        font-size: 1.1rem;
+    }
+}

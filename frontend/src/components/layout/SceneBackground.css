@@ -1,0 +1,368 @@
+/* ==================================================================
+   SceneBackground — shared sky / clouds / creatures / earth / grass
+   ================================================================== */
+
+/* ---------- Sky ---------- */
+.scene-sky {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    transition: background 0.8s ease;
+    background: #6bb9e8;
+    font-family: 'OpenDyslexic', sans-serif;
+}
+
+.dark .scene-sky {
+    background: #111638;
+}
+
+/* ---------- Stars (night) ---------- */
+.stars-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.dark .stars-container {
+    opacity: 1;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+.star:nth-child(odd) {
+    animation-duration: 3s;
+}
+
+.star:nth-child(3n) {
+    animation-delay: 0.5s;
+}
+
+.star:nth-child(5n) {
+    animation-delay: 1s;
+    width: 2px;
+    height: 2px;
+}
+
+.star:nth-child(7n) {
+    animation-delay: 1.5s;
+    width: 4px;
+    height: 4px;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+}
+
+
+/* ---------- Sun / Moon container ---------- */
+.celestial-btn {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    z-index: 50;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+    filter: url(#sketchy-heavy);
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.celestial-btn:hover {
+    transform: scale(1.08);
+}
+
+/* ---------- Cloud ---------- */
+.cloud-svg {
+    position: absolute;
+    pointer-events: none;
+    animation: float-cloud-slow 160s linear infinite;
+    opacity: 0.92;
+    filter: url(#sketchy);
+}
+
+.cloud-svg-1 {
+    top: 10%;
+    left: -220px;
+    animation-duration: 180s;
+}
+
+.cloud-svg-2 {
+    top: 24%;
+    left: -180px;
+    animation-duration: 220s;
+    animation-delay: 40s;
+}
+
+.cloud-svg-3 {
+    top: 6%;
+    left: -160px;
+    animation-duration: 200s;
+    animation-delay: 80s;
+}
+
+.dark .cloud-svg {
+    opacity: 0.06;
+}
+
+@keyframes float-cloud-slow {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 300px));
+    }
+}
+
+/* ---------- Creatures layer ---------- */
+.creatures-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.butterfly {
+    position: absolute;
+    filter: url(#sketchy);
+}
+
+.butterfly svg {
+    animation: flap 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+    0% {
+        transform: scaleX(1);
+    }
+
+    100% {
+        transform: scaleX(0.55);
+    }
+}
+
+.firefly {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffe082;
+    box-shadow: 0 0 6px 3px rgba(255, 224, 130, 0.6), 0 0 14px 6px rgba(255, 200, 60, 0.25);
+    animation: firefly-glow 2s ease-in-out infinite alternate;
+}
+
+.firefly:nth-child(odd) {
+    animation-duration: 2.5s;
+}
+
+.firefly:nth-child(3n) {
+    animation-delay: 0.7s;
+}
+
+@keyframes firefly-glow {
+    0% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* ---------- Earth / Ground ---------- */
+.earth-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    pointer-events: none;
+    filter: url(#sketchy);
+}
+
+.earth-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ---------- Ground Decoration: Grass + Flowers ---------- */
+.ground-decoration {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    z-index: 8;
+    pointer-events: none;
+    filter: url(#sketchy);
+}
+
+.grass-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+}
+
+.flowers-row {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0 1%;
+}
+
+.flower {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: sway 4s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+.flower:nth-child(even) {
+    animation-delay: 0.6s;
+    animation-duration: 4.5s;
+}
+
+.flower:nth-child(3n) {
+    animation-delay: 1.2s;
+    animation-duration: 5s;
+}
+
+.flower:nth-child(5n+1) {
+    animation-delay: 0.3s;
+    animation-duration: 3.5s;
+}
+
+@keyframes sway {
+
+    0%,
+    100% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+/* ---------- Scene Content Slot (positions children from bottom) ---------- */
+.scene-content {
+    position: relative;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: calc(100vh - 80px);
+    padding: 10px 30px 0;
+    box-sizing: border-box;
+}
+
+/* ---------- General Animations ---------- */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — Tablet (max 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+    .scene-title {
+        font-size: 1.5rem;
+        top: 52px;
+        left: 16px;
+    }
+
+    .celestial-btn {
+        width: 80px;
+        height: 80px;
+        top: 12px;
+        right: 12px;
+    }
+
+    .celestial-btn svg {
+        width: 70px;
+        height: 70px;
+    }
+
+    .scene-content {
+        padding: 100px 14px 0;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — Small phone (max 480px)
+   ================================================================ */
+@media (max-width: 480px) {
+    .scene-title {
+        font-size: 1.2rem;
+        top: 42px;
+        left: 12px;
+    }
+
+    .celestial-btn {
+        width: 64px;
+        height: 64px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .celestial-btn svg {
+        width: 56px;
+        height: 56px;
+    }
+
+    .scene-content {
+        padding: 80px 10px 0;
+    }
+
+    .flowers-row {
+        bottom: 4px;
+    }
+
+    .flower svg {
+        width: 18px !important;
+        height: auto !important;
+    }
+}
