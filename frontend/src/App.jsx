@@ -37,6 +37,7 @@ import MathReadLevel1 from "@/features/learning/math/reading/levels/level1";
 import MathWriteLevel1 from "@/features/learning/math/writing/levels/level1";
 import MathWriteLevel2 from "@/features/learning/math/writing/levels/level2";
 
+import Community from "@/pages/Community";
 
 function App() {
   return (
@@ -75,6 +76,9 @@ function App() {
         <Route path="/games/orientation" element={<OrientationGame />}/>
         <Route path="/games/soundmatch" element={<SoundMatchGame />} />
         <Route path="/games/sequence" element={<SequenceBuilderGame />} />
+
+        <Route path="/community"  element={<Community/>}/>
+
 
         <Route path="/writing/math/level1" element={<MathWriteLevel1 />} />
         <Route path="/writing/math/level2" element={<MathWriteLevel2 />} />

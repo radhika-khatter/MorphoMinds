@@ -271,11 +271,66 @@
     fill: #ffffff !important;    /* WHITE */
 }
 /* Default font */
-html {
-  @apply font-sans;
+
+/* ===============================
+   COMMUNITY BUTTON FIX
+   =============================== */
+
+.navbar-community-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
 }
 
-/* Dyslexia-friendly mode */
-html.dyslexic {
-  @apply font-dyslexic;
+.navbar-community-btn span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+/* ================================================================
+   COMMUNITY BUTTON — SLAB STYLE EXTENSION
+   ================================================================ */
+
+.navbar-community-btn {
+  width: auto;                 /* allow text */
+  min-width: 110px;
+  padding: 0 14px;
+  gap: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Icon inside */
+.navbar-community-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Text inside */
+.navbar-community-btn span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Hover enhancement */
+.navbar-community-btn:hover:not(:disabled) {
+  background: #e3b673;
+}
+
+/* Dark mode */
+.dark .navbar-community-btn {
+  background: #7a5a38;
+  border-color: #3a2818;
+  color: #f0e6d0;
+}
+
+.dark .navbar-community-btn:hover:not(:disabled) {
+  background: #8d6a44;
 }

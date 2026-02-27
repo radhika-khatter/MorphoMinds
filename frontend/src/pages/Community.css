@@ -1,0 +1,105 @@
+.community-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Header */
+.community-header {
+    color: white;
+  text-align: center;
+}
+
+.community-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.community-header p {
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+/* Grid */
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+@media (max-width: 1200px) {
+  .community-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .community-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .community-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* NGO Card */
+.community-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.community-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
+}
+
+.community-card h2 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* Text */
+.community-cause {
+  font-size: 14px;
+  margin: 6px 0;
+  font-weight: 600;
+}
+
+.community-description {
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.community-info p {
+  font-size: 12px;
+  margin: 4px 0;
+  opacity: 0.9;
+}
+
+/* Button */
+.community-btn {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #6b3e1f;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.community-btn:hover {
+  background: #4b2e1a;
+  transform: scale(1.05);
+}

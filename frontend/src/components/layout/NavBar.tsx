@@ -5,7 +5,7 @@ import { SunSVG, MoonSVG } from "@/components/scene/HomeSVGs";
 import "./NavBar.css";
 
 /* ==================================================================
-   Hand-drawn SVG icons
+   Icons
    ================================================================== */
 
 const BackIcon = () => (
@@ -29,6 +29,31 @@ const ProfileIcon = () => (
   </svg>
 );
 
+/* ✅ Community Button Component */
+const CommunityButton = ({ onClick }: { onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className="navbar-slab-btn navbar-community-btn"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="6" cy="12" r="3" />
+      <circle cx="18" cy="12" r="3" />
+      <circle cx="12" cy="6" r="3" />
+      <path d="M9 14c1 2 5 2 6 0" />
+    </svg>
+    <span>Community</span>
+  </button>
+);
+
 const MenuIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
     <path d="M4 6h16" />
@@ -45,34 +70,25 @@ const CloseIcon = () => (
 );
 
 /* ==================================================================
-   Font Toggle Icons (A ↔ 𝒜)
+   Font Toggle Icons
    ================================================================== */
 
 const FontDefaultIcon = () => (
-  <svg width="80" height="80" viewBox="0 0 100 100">
-    <text
-      x="50%"
-      y="68%"
-      textAnchor="middle"
-      fontSize="64"
-      fontWeight="900"
-      fill="currentColor"
-      style={{ fontFamily: "inherit" }}
-    >
+  <svg width="32" height="32" viewBox="0 0 100 100">
+    <text x="50%" y="68%" textAnchor="middle" fontSize="64" fontWeight="900">
       A
     </text>
   </svg>
 );
 
 const FontDyslexicIcon = () => (
-  <svg width="80" height="80" viewBox="0 0 100 100">
+  <svg width="32" height="32" viewBox="0 0 100 100">
     <text
       x="50%"
       y="68%"
       textAnchor="middle"
       fontSize="64"
       fontWeight="900"
-      fill="currentColor"
       style={{ fontFamily: "'OpenDyslexic', sans-serif" }}
     >
       A
@@ -97,25 +113,16 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDyslexicFont, setIsDyslexicFont] = useState(false);
 
-  /* ---------- Apply font globally ---------- */
+  /* Apply font globally */
   useEffect(() => {
-  console.log("isDyslexicFont =", isDyslexicFont);
-}, [isDyslexicFont]);
-/* ---------- Apply font globally (FIXED) ---------- */
-useEffect(() => {
-  const root = document.documentElement;
+    const root = document.documentElement;
+    isDyslexicFont
+      ? root.classList.add("TEST_DYSLEXIC")
+      : root.classList.remove("TEST_DYSLEXIC");
+  }, [isDyslexicFont]);
 
-  if (isDyslexicFont) {
-    root.classList.add("TEST_DYSLEXIC");
-  } else {
-    root.classList.remove("TEST_DYSLEXIC");
-  }
-
-  console.log("HTML classes:", root.className);
-}, [isDyslexicFont]);
-
-  /* ---------- History tracking ---------- */
-  const historyIdx = (window.history.state?.idx ?? 0);
+  /* History tracking */
+  const historyIdx = window.history.state?.idx ?? 0;
   const maxIdx = useRef(historyIdx);
 
   useEffect(() => {
@@ -127,63 +134,81 @@ useEffect(() => {
 
   return (
     <nav className="navbar">
-      {/* ---------- DESKTOP ---------- */}
-      <span className="navbar-title navbar-desktop-only">MorphoMinds</span>
+      {/* Desktop Title */}
+      <span className="navbar-title navbar-desktop-only">
+        MorphoMinds
+      </span>
 
+      {/* Desktop Controls */}
       {!hideControls && (
         <div className="navbar-slab navbar-desktop-only">
           <button className="navbar-slab-btn" onClick={() => navigate(-1)} disabled={!canGoBack}>
             <BackIcon />
           </button>
+
           <button className="navbar-slab-btn" onClick={() => navigate(1)} disabled={!canGoForward}>
             <ForwardIcon />
           </button>
+
           <div className="navbar-slab-divider" />
+
           <button className="navbar-slab-btn" onClick={onProfileOpen}>
             <ProfileIcon />
           </button>
+
+          <CommunityButton onClick={() => navigate("/community")} />
         </div>
       )}
 
-      {/* ---------- RIGHT CONTROLS (DESKTOP) ---------- */}
+      {/* Right Controls */}
       <div className="navbar-desktop-only navbar-right-controls">
-        {/* Font Toggle (A ↔ 𝒜) */}
         <button
-  className="navbar-theme-btn navbar-font-toggle"
-  onClick={() => {
-    console.log("FONT TOGGLE CLICKED");
-    setIsDyslexicFont((prev) => !prev);
-  }}
->
-  {isDyslexicFont ? <FontDyslexicIcon /> : <FontDefaultIcon />}
-</button>
+          className="navbar-theme-btn navbar-font-toggle"
+          onClick={() => setIsDyslexicFont((p) => !p)}
+        >
+          {isDyslexicFont ? <FontDyslexicIcon /> : <FontDefaultIcon />}
+        </button>
 
-        {/* Theme Toggle */}
         <button
           className="navbar-theme-btn"
           onClick={() => setTheme(isDark ? "light" : "dark")}
-          aria-label="Toggle theme"
         >
           {isDark ? <MoonSVG /> : <SunSVG />}
         </button>
       </div>
 
-      {/* ---------- MOBILE ---------- */}
+      {/* Mobile Back */}
       {!hideControls && (
-        <button className="navbar-hamburger navbar-mobile-only" onClick={() => navigate(-1)} disabled={!canGoBack}>
+        <button
+          className="navbar-hamburger navbar-mobile-only"
+          onClick={() => navigate(-1)}
+          disabled={!canGoBack}
+        >
           <BackIcon />
         </button>
       )}
 
-      <span className="navbar-title navbar-mobile-only">MorphoMinds</span>
+      <span className="navbar-title navbar-mobile-only">
+        MorphoMinds
+      </span>
 
-      <button className="navbar-hamburger navbar-mobile-only" onClick={() => setMenuOpen(!menuOpen)}>
+      <button
+        className="navbar-hamburger navbar-mobile-only"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
         {menuOpen ? <CloseIcon /> : <MenuIcon />}
       </button>
 
-      {/* ---------- MOBILE DROPDOWN ---------- */}
+      {/* Mobile Dropdown */}
       {menuOpen && (
         <div className="navbar-dropdown">
+          <button
+            className="navbar-dropdown-item"
+            onClick={() => navigate("/community")}
+          >
+            Community
+          </button>
+
           <button
             className="navbar-dropdown-item"
             onClick={() => {
@@ -191,18 +216,17 @@ useEffect(() => {
               setMenuOpen(false);
             }}
           >
-            <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
+            {isDark ? "Light Mode" : "Dark Mode"}
           </button>
 
           <button
             className="navbar-dropdown-item"
             onClick={() => {
-              setIsDyslexicFont((prev) => !prev);
+              setIsDyslexicFont((p) => !p);
               setMenuOpen(false);
             }}
           >
-            <span style={{ fontWeight: 900 }}>A</span>
-            <span>Font</span>
+            Font
           </button>
 
           <button
@@ -212,8 +236,7 @@ useEffect(() => {
               setMenuOpen(false);
             }}
           >
-            <ProfileIcon />
-            <span>Profile</span>
+            Profile
           </button>
         </div>
       )}
