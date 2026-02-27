@@ -8,8 +8,9 @@ import SupportPage from "@/pages/Support";
 import SettingsPage from "@/pages/Settings";
 
 import GameCard from "@/features/game/GameCard";
-
-
+import OrientationGame from "@/features/game/OrientationGame";
+import SoundMatchGame from "@/features/game/SoundMatchGame";
+import SequenceBuilderGame from "@/features/game/SequenceBuilderGame";
 
 import ReadingHome from "@/features/learning/reading/ReadingHome";
 import WritingHome from "@/features/learning/writing/WritingHome";
@@ -70,8 +71,10 @@ function App() {
 
         <Route path="/reading/math/level1" element={<MathReadLevel1 />} />
         
-        <Route path="/reading/:subject/game" element={<GameCard />} />
-
+        <Route path="/games" element={<GameCard />} />
+        <Route path="/games/orientation" element={<OrientationGame />}/>
+        <Route path="/games/soundmatch" element={<SoundMatchGame />} />
+        <Route path="/games/sequence" element={<SequenceBuilderGame />} />
 
         <Route path="/writing/math/level1" element={<MathWriteLevel1 />} />
         <Route path="/writing/math/level2" element={<MathWriteLevel2 />} />

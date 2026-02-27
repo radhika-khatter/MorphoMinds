@@ -99,7 +99,7 @@ const Dashboard = () => {
 <div className="practice-game">
   <button
     className="practice-card"
-    onClick={() => navigate(`/reading/${selectedSubject}/game`)}
+    onClick={() => navigate(`/games`)}
   >
     <div className="practice-icon">🎮</div>
     <div className="practice-title">Practice Game</div>

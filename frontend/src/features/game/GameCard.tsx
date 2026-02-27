@@ -1,91 +1,71 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import SceneBackground from "@/components/layout/SceneBackground";
 import SignBoard from "@/components/ui/SignBoard";
-
-import "@/components/common/level-page.css";
 import "@/components/common/board-content.css";
 
-const GameCard: React.FC = () => {
-  const { subject } = useParams<{ subject: string }>();
-
-  // Default examples
-  const targetLetter = subject === "english" ? "b" : "ब";
-  const options = subject === "english" ? ["b", "d"] : ["ब", "व"];
-
-  const [message, setMessage] = useState("");
-  const [points, setPoints] = useState(0);
-
-  const handleSelect = (letter: string) => {
-    if (letter === targetLetter) {
-      setPoints((prev) => prev + 10);
-      setMessage("🎉 Correct! +10 points");
-    } else {
-      setMessage(`❌ This is "${letter}". Try again.`);
-    }
-  };
-
+const GamesHome = () => {
   return (
     <SceneBackground>
-      
-        <div className="level-container">
-          <div className="level-card fade-in-up">
+      <SignBoard maxWidth="900px">
+        <div className="board-section">
 
-            {/* Nails */}
-            <span className="level-nail level-nail-tl" />
-            <span className="level-nail level-nail-tr" />
-            <span className="level-nail level-nail-bl" />
-            <span className="level-nail level-nail-br" />
+          {/* Title */}
+          <h1 className="board-title">
+            Games
+          </h1>
 
-            <h1 className="level-title">🎮 Practice Game</h1>
-            <p className="level-desc">
-              Choose the correct letter
-            </p>
+          {/* Subtitle */}
+          <p className="board-subtitle">
+            Play short practice games to strengthen orientation, sound recognition, and sequencing.
+          </p>
 
-            {/* Target Letter */}
-            <div style={{ textAlign: "center", margin: "24px 0" }}>
-              <div className="level-letter">{targetLetter}</div>
-            </div>
+          {/* Games Grid */}
+          <div className="board-grid">
 
-            {/* Options */}
-            <div className="board-grid">
-              {options.map((opt) => (
-                <button
-                  key={opt}
-                  onClick={() => handleSelect(opt)}
-                  className="board-btn"
-                  style={{ fontSize: "2.5rem", padding: "18px 0" }}
-                >
-                  {opt}
-                </button>
-              ))}
-            </div>
-
-            {/* Feedback */}
-            {message && (
-              <div
-                className={`level-result ${
-                  message.includes("Correct") ? "correct" : "incorrect"
-                }`}
-              >
-                {message}
-              </div>
-            )}
-
-            {/* Points */}
-            <p
-              className="board-subtitle"
-              style={{ marginTop: "12px", fontWeight: 700 }}
+            {/* Game 1 – Orientation Practice */}
+            <Link
+              to="/games/orientation"
+              className="board-card"
             >
-              ⭐ Points: {points}
-            </p>
+              <div className="board-card-title">
+                🧠 Orientation Practice
+              </div>
+              <div className="board-card-text">
+                Improve recognition of similar and mirror letters (b / d, प / व).
+              </div>
+            </Link>
+
+            {/* Game 2 – Sound Match */}
+            <Link
+              to="/games/soundmatch"
+              className="board-card"
+            >
+              <div className="board-card-title">
+                🔊 Sound Match
+              </div>
+              <div className="board-card-text">
+                Listen to a sound and select the correct letter or syllable.
+              </div>
+            </Link>
+
+            {/* Game 3 – Sequence Builder */}
+            <Link
+              to="/games/sequence"
+              className="board-card"
+            >
+              <div className="board-card-title">
+                🧩 Sequence Builder
+              </div>
+              <div className="board-card-text">
+                Arrange letters in the correct order to form words.
+              </div>
+            </Link>
 
           </div>
         </div>
-      
+      </SignBoard>
     </SceneBackground>
   );
 };
 
-export default GameCard;
+export default GamesHome;

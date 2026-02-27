@@ -104,8 +104,11 @@ const config: Config = {
         "pulse-slow": "pulse-slow 4s ease-in-out infinite",
       },
 	  fontFamily: {
-		dyslexic: ['OpenDyslexic', 'sans-serif'],
-	  },
+    sans: ["Inter", "system-ui", "sans-serif"],   // default
+    dyslexic: ["OpenDyslexic", "sans-serif"],     // dyslexia-friendly
+    lexend: ["Lexend", "sans-serif"],              // reading-friendly
+  },
+    
     },
   },
   plugins: [tailwindcssAnimate],

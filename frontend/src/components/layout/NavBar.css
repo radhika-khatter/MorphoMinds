@@ -1,7 +1,5 @@
 /* ==================================================================
    NavBar
-   Desktop:  [Title]  ···  [wooden slab: ← → | 👤]  ···  [☀/🌙]
-   Mobile:   [slab: ←]  [Title]  [☰]
    ================================================================== */
 
 .navbar {
@@ -13,7 +11,14 @@
     width: 100%;
     padding: 14px 24px;
     box-sizing: border-box;
-    font-family: 'OpenDyslexic', sans-serif;
+   
+}
+
+/* ---------- Right Controls Alignment ---------- */
+.navbar-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 /* ---------- Title ---------- */
@@ -42,7 +47,6 @@
     z-index: 1;
 }
 
-/* Center the slab on desktop */
 @media (min-width: 769px) {
     .navbar-slab:not(.navbar-slab-mobile) {
         position: absolute;
@@ -69,7 +73,7 @@
     box-shadow: 2px 3px 0 #2a1a0a;
 }
 
-/* ---------- Slab Buttons — raised wooden look ---------- */
+/* ---------- Slab Buttons ---------- */
 .navbar-slab-btn {
     position: relative;
     display: flex;
@@ -127,7 +131,7 @@
     background: rgba(180, 140, 80, 0.2);
 }
 
-/* ---------- Theme Toggle Button (desktop, right side) ---------- */
+/* ---------- Theme & Font Toggle Button ---------- */
 .navbar-theme-btn {
     background: none;
     border: none;
@@ -150,7 +154,17 @@
     height: 80px;
 }
 
-/* ---------- Hamburger Button (mobile, right side) ---------- */
+/* ---------- Font Toggle Fix ---------- */
+.navbar-font-toggle {
+    color: #000 !important;      /* ALWAYS black */
+    filter: none !important;     /* Remove heavy sketch filter */
+}
+
+.dark .navbar-font-toggle {
+    color: #000 !important;      /* Also black in dark mode */
+}
+
+/* ---------- Hamburger ---------- */
 .navbar-hamburger {
     position: relative;
     display: flex;
@@ -193,7 +207,7 @@
     box-shadow: 2px 3px 0 #2a1a0a;
 }
 
-/* ---------- Responsive visibility ---------- */
+/* ---------- Responsive ---------- */
 .navbar-desktop-only {
     display: flex;
 }
@@ -202,77 +216,6 @@
     display: none;
 }
 
-/* ---------- Mobile Dropdown ---------- */
-.navbar-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 16px;
-    z-index: 100;
-    background: #d4a056;
-    border: 3px solid #6b3a1f;
-    border-radius: 10px;
-    box-shadow: 3px 4px 0 #6b3a1f;
-    filter: url(#sketchy);
-    overflow: hidden;
-    min-width: 170px;
-    animation: navbar-dropdown-in 0.15s ease-out;
-}
-
-@keyframes navbar-dropdown-in {
-    from {
-        opacity: 0;
-        transform: translateY(-6px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.dark .navbar-dropdown {
-    background: #5a4230;
-    border-color: #3a2818;
-    box-shadow: 3px 4px 0 #2a1a0a;
-}
-
-.navbar-dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 16px;
-    border: none;
-    background: transparent;
-    color: #fff;
-    font-family: 'OpenDyslexic', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
-}
-
-.navbar-dropdown-item:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.navbar-dropdown-item+.navbar-dropdown-item {
-    border-top: 2px dashed rgba(107, 58, 31, 0.2);
-}
-
-.dark .navbar-dropdown-item {
-    color: #f0e6d0;
-}
-
-.dark .navbar-dropdown-item+.navbar-dropdown-item {
-    border-top-color: rgba(180, 140, 80, 0.15);
-}
-
-/* ================================================================
-   RESPONSIVE — mobile (≤768px)
-   ================================================================ */
 @media (max-width: 768px) {
     .navbar-desktop-only {
         display: none !important;
@@ -300,4 +243,39 @@
         width: 32px;
         height: 32px;
     }
+}
+/* ================================================================
+   FONT TOGGLE — LIGHT: BLACK | DARK: WHITE
+   ================================================================ */
+
+/* Light mode (default) */
+.navbar-theme-btn.navbar-font-toggle {
+    filter: none !important;     /* remove sketch filter */
+    color: #000 !important;      /* BLACK */
+}
+
+/* SVG + text inside font icon */
+.navbar-theme-btn.navbar-font-toggle svg,
+.navbar-theme-btn.navbar-font-toggle text {
+    fill: #000 !important;       /* BLACK */
+}
+
+/* Dark mode */
+.dark .navbar-theme-btn.navbar-font-toggle {
+    filter: none !important;
+    color: #ffffff !important;   /* WHITE */
+}
+
+.dark .navbar-theme-btn.navbar-font-toggle svg,
+.dark .navbar-theme-btn.navbar-font-toggle text {
+    fill: #ffffff !important;    /* WHITE */
+}
+/* Default font */
+html {
+  @apply font-sans;
+}
+
+/* Dyslexia-friendly mode */
+html.dyslexic {
+  @apply font-dyslexic;
 }

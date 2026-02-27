@@ -43,6 +43,6 @@
 
 body {
   @apply bg-background text-foreground;
-  font-family: 'OpenDyslexic', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  
   font-feature-settings: "rlig" 1, "calt" 1;
 }
