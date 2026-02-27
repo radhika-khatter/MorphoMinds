@@ -36,6 +36,7 @@ import MathReadLevel1 from "@/features/learning/math/reading/levels/level1";
 
 import MathWriteLevel1 from "@/features/learning/math/writing/levels/level1";
 import MathWriteLevel2 from "@/features/learning/math/writing/levels/level2";
+import SequenceRecallGame from "@/features/game/SequenceRecall";
 
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
 
         <Route path="/writing/math/level1" element={<MathWriteLevel1 />} />
         <Route path="/writing/math/level2" element={<MathWriteLevel2 />} />
+        <Route path="/games/sequence-recall" element={<SequenceRecallGame />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -61,7 +61,21 @@ const GamesHome = () => {
               </div>
             </Link>
 
+            {/* Game 4 – Sequence Recall */}
+            <Link
+              to="/games/sequence-recall"
+              className="board-card"
+            >
+              <div className="board-card-title">
+                🔄 Sequence Recall
+              </div>
+              <div className="board-card-text">
+                Memorize a short letter sequence and recreate it in the correct order.
+              </div>
+            </Link>
+
           </div>
+
         </div>
       </SignBoard>
     </SceneBackground>

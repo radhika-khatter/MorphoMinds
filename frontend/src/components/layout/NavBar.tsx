@@ -5,7 +5,7 @@ import { SunSVG, MoonSVG } from "@/components/scene/HomeSVGs";
 import "./NavBar.css";
 
 /* ==================================================================
-   Hand-drawn SVG icons
+   Icons
    ================================================================== */
 
 const BackIcon = () => (
@@ -45,42 +45,6 @@ const CloseIcon = () => (
 );
 
 /* ==================================================================
-   Font Toggle Icons (A ↔ 𝒜)
-   ================================================================== */
-
-const FontDefaultIcon = () => (
-  <svg width="80" height="80" viewBox="0 0 100 100">
-    <text
-      x="50%"
-      y="68%"
-      textAnchor="middle"
-      fontSize="64"
-      fontWeight="900"
-      fill="currentColor"
-      style={{ fontFamily: "inherit" }}
-    >
-      A
-    </text>
-  </svg>
-);
-
-const FontDyslexicIcon = () => (
-  <svg width="80" height="80" viewBox="0 0 100 100">
-    <text
-      x="50%"
-      y="68%"
-      textAnchor="middle"
-      fontSize="64"
-      fontWeight="900"
-      fill="currentColor"
-      style={{ fontFamily: "'OpenDyslexic', sans-serif" }}
-    >
-      A
-    </text>
-  </svg>
-);
-
-/* ==================================================================
    NavBar
    ================================================================== */
 
@@ -97,29 +61,44 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDyslexicFont, setIsDyslexicFont] = useState(false);
 
-  /* ---------- Apply font globally ---------- */
+  /* ==================================================================
+     🔥 BULLETPROOF GLOBAL FONT SWITCH
+     ================================================================== */
   useEffect(() => {
-  console.log("isDyslexicFont =", isDyslexicFont);
-}, [isDyslexicFont]);
-/* ---------- Apply font globally (FIXED) ---------- */
-useEffect(() => {
-  const root = document.documentElement;
+    const styleId = "dynamic-font-style";
+    let styleTag = document.getElementById(styleId);
 
-  if (isDyslexicFont) {
-    root.classList.add("TEST_DYSLEXIC");
-  } else {
-    root.classList.remove("TEST_DYSLEXIC");
-  }
+    if (!styleTag) {
+      styleTag = document.createElement("style");
+      styleTag.id = styleId;
+      document.head.appendChild(styleTag);
+    }
 
-  console.log("HTML classes:", root.className);
-}, [isDyslexicFont]);
+    if (isDyslexicFont) {
+      styleTag.innerHTML = `
+        * {
+          font-family: 'OpenDyslexic', sans-serif !important;
+        }
+      `;
+    } else {
+      styleTag.innerHTML = `
+        * {
+          font-family: 'Inter', system-ui, sans-serif !important;
+        }
+      `;
+    }
+  }, [isDyslexicFont]);
 
-  /* ---------- History tracking ---------- */
-  const historyIdx = (window.history.state?.idx ?? 0);
+  /* ==================================================================
+     History tracking
+     ================================================================== */
+  const historyIdx = window.history.state?.idx ?? 0;
   const maxIdx = useRef(historyIdx);
 
   useEffect(() => {
-    if (historyIdx > maxIdx.current) maxIdx.current = historyIdx;
+    if (historyIdx > maxIdx.current) {
+      maxIdx.current = historyIdx;
+    }
   }, [historyIdx]);
 
   const canGoBack = historyIdx > 0;
@@ -127,36 +106,65 @@ useEffect(() => {
 
   return (
     <nav className="navbar">
-      {/* ---------- DESKTOP ---------- */}
-      <span className="navbar-title navbar-desktop-only">MorphoMinds</span>
 
+      {/* Desktop Title */}
+      <span className="navbar-title navbar-desktop-only">
+        MorphoMinds
+      </span>
+
+      {/* Desktop Navigation Slab */}
       {!hideControls && (
         <div className="navbar-slab navbar-desktop-only">
-          <button className="navbar-slab-btn" onClick={() => navigate(-1)} disabled={!canGoBack}>
+          <button
+            className="navbar-slab-btn"
+            onClick={() => navigate(-1)}
+            disabled={!canGoBack}
+          >
             <BackIcon />
           </button>
-          <button className="navbar-slab-btn" onClick={() => navigate(1)} disabled={!canGoForward}>
+
+          <button
+            className="navbar-slab-btn"
+            onClick={() => navigate(1)}
+            disabled={!canGoForward}
+          >
             <ForwardIcon />
           </button>
+
           <div className="navbar-slab-divider" />
-          <button className="navbar-slab-btn" onClick={onProfileOpen}>
+
+          <button
+            className="navbar-slab-btn"
+            onClick={onProfileOpen}
+          >
             <ProfileIcon />
           </button>
         </div>
       )}
 
-      {/* ---------- RIGHT CONTROLS (DESKTOP) ---------- */}
+      {/* Right Controls */}
       <div className="navbar-desktop-only navbar-right-controls">
-        {/* Font Toggle (A ↔ 𝒜) */}
-        <button
-  className="navbar-theme-btn navbar-font-toggle"
-  onClick={() => {
-    console.log("FONT TOGGLE CLICKED");
-    setIsDyslexicFont((prev) => !prev);
-  }}
->
-  {isDyslexicFont ? <FontDyslexicIcon /> : <FontDefaultIcon />}
-</button>
+
+        {/* Dyslexia Toggle */}
+        <div className="navbar-dyslexia-toggle">
+
+          <div className="slider-wrapper">
+            <button
+              className={`toggle-switch ${isDyslexicFont ? "active" : ""}`}
+              onClick={() => setIsDyslexicFont(prev => !prev)}
+              aria-label="Toggle Dyslexia Mode"
+            >
+              <span className="toggle-thumb" />
+            </button>
+          </div>
+
+          <div className="label-wrapper">
+            <span className="toggle-label">
+              Dyslexia Mode
+            </span>
+          </div>
+
+        </div>
 
         {/* Theme Toggle */}
         <button
@@ -166,57 +174,31 @@ useEffect(() => {
         >
           {isDark ? <MoonSVG /> : <SunSVG />}
         </button>
+
       </div>
 
-      {/* ---------- MOBILE ---------- */}
+      {/* Mobile Back Button */}
       {!hideControls && (
-        <button className="navbar-hamburger navbar-mobile-only" onClick={() => navigate(-1)} disabled={!canGoBack}>
+        <button
+          className="navbar-hamburger navbar-mobile-only"
+          onClick={() => navigate(-1)}
+          disabled={!canGoBack}
+        >
           <BackIcon />
         </button>
       )}
 
-      <span className="navbar-title navbar-mobile-only">MorphoMinds</span>
+      <span className="navbar-title navbar-mobile-only">
+        MorphoMinds
+      </span>
 
-      <button className="navbar-hamburger navbar-mobile-only" onClick={() => setMenuOpen(!menuOpen)}>
+      <button
+        className="navbar-hamburger navbar-mobile-only"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
         {menuOpen ? <CloseIcon /> : <MenuIcon />}
       </button>
 
-      {/* ---------- MOBILE DROPDOWN ---------- */}
-      {menuOpen && (
-        <div className="navbar-dropdown">
-          <button
-            className="navbar-dropdown-item"
-            onClick={() => {
-              setTheme(isDark ? "light" : "dark");
-              setMenuOpen(false);
-            }}
-          >
-            <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
-          </button>
-
-          <button
-            className="navbar-dropdown-item"
-            onClick={() => {
-              setIsDyslexicFont((prev) => !prev);
-              setMenuOpen(false);
-            }}
-          >
-            <span style={{ fontWeight: 900 }}>A</span>
-            <span>Font</span>
-          </button>
-
-          <button
-            className="navbar-dropdown-item"
-            onClick={() => {
-              onProfileOpen?.();
-              setMenuOpen(false);
-            }}
-          >
-            <ProfileIcon />
-            <span>Profile</span>
-          </button>
-        </div>
-      )}
     </nav>
   );
 };
