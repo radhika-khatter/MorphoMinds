@@ -11,17 +11,18 @@
     width: 100%;
     padding: 14px 24px;
     box-sizing: border-box;
-   
 }
 
 /* ---------- Right Controls Alignment ---------- */
+
 .navbar-right-controls {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
 }
 
 /* ---------- Title ---------- */
+
 .navbar-title {
     font-size: 1.6rem;
     font-weight: 800;
@@ -36,7 +37,10 @@
     text-shadow: 2px 2px 0 #2a1a0a;
 }
 
-/* ---------- Wooden Slab ---------- */
+/* ==================================================================
+   Wooden Slab
+   ================================================================== */
+
 .navbar-slab {
     position: relative;
     display: flex;
@@ -73,9 +77,11 @@
     box-shadow: 2px 3px 0 #2a1a0a;
 }
 
-/* ---------- Slab Buttons ---------- */
+/* ==================================================================
+   Slab Buttons
+   ================================================================== */
+
 .navbar-slab-btn {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,7 +94,6 @@
     cursor: pointer;
     transition: all 0.15s ease;
     box-shadow: 1px 2px 0 #6b3a1f;
-    z-index: 1;
 }
 
 .navbar-slab-btn:hover:not(:disabled) {
@@ -131,7 +136,10 @@
     background: rgba(180, 140, 80, 0.2);
 }
 
-/* ---------- Theme & Font Toggle Button ---------- */
+/* ==================================================================
+   Theme Button
+   ================================================================== */
+
 .navbar-theme-btn {
     background: none;
     border: none;
@@ -139,8 +147,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
     transition: transform 0.3s ease;
     filter: url(#sketchy-heavy);
 }
@@ -150,21 +158,14 @@
 }
 
 .navbar-theme-btn svg {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
 }
 
-/* ---------- Font Toggle Fix ---------- */
-.navbar-font-toggle {
-    color: #000 !important;      /* ALWAYS black */
-    filter: none !important;     /* Remove heavy sketch filter */
-}
+/* ==================================================================
+   Hamburger
+   ================================================================== */
 
-.dark .navbar-font-toggle {
-    color: #000 !important;      /* Also black in dark mode */
-}
-
-/* ---------- Hamburger ---------- */
 .navbar-hamburger {
     position: relative;
     display: flex;
@@ -179,7 +180,6 @@
     cursor: pointer;
     box-shadow: 1px 2px 0 #6b3a1f;
     transition: all 0.15s ease;
-    z-index: 1;
 }
 
 .navbar-hamburger::before {
@@ -207,7 +207,82 @@
     box-shadow: 2px 3px 0 #2a1a0a;
 }
 
-/* ---------- Responsive ---------- */
+/* ==================================================================
+   Dyslexia Toggle (Layout-Stable)
+   ================================================================== */
+
+.navbar-dyslexia-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Prevent layout shift */
+.slider-wrapper {
+    width: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.label-wrapper {
+    width: 110px;
+    text-align: center;
+    margin-top: 6px;
+}
+
+/* Slider */
+.toggle-switch {
+    width: 60px;
+    height: 30px;
+    border-radius: 999px;
+    background: #d4a056;
+    border: 2px solid #6b3a1f;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 2px 3px 0 #6b3a1f;
+}
+
+.dark .toggle-switch {
+    background: #7a5a38;
+    border-color: #3a2818;
+    box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+.toggle-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-switch.active {
+    background: #4CAF50;
+}
+
+.toggle-switch.active .toggle-thumb {
+    transform: translateX(28px);
+}
+
+.toggle-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #6b3a1f;
+}
+
+.dark .toggle-label {
+    color: #f0e6d0;
+}
+
+/* ==================================================================
+   Responsive
+   ================================================================== */
+
 .navbar-desktop-only {
     display: flex;
 }
@@ -243,6 +318,7 @@
         width: 32px;
         height: 32px;
     }
+<<<<<<< HEAD
 }
 /* ================================================================
    FONT TOGGLE — LIGHT: BLACK | DARK: WHITE
@@ -333,4 +409,6 @@
 
 .dark .navbar-community-btn:hover:not(:disabled) {
   background: #8d6a44;
+=======
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
 }

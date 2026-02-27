@@ -116,8 +116,10 @@ html {
 }
 
 /* Dyslexia-friendly mode */
-html.dyslexic {
-  @apply font-dyslexic;
+html.dyslexic,
+html.dyslexic body,
+html.dyslexic * {
+  font-family: "OpenDyslexic", sans-serif !important;
 }
 
 /* ================================================================

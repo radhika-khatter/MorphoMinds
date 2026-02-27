@@ -70,6 +70,7 @@ const CloseIcon = () => (
 );
 
 /* ==================================================================
+<<<<<<< HEAD
    Font Toggle Icons
    ================================================================== */
 
@@ -97,6 +98,8 @@ const FontDyslexicIcon = () => (
 );
 
 /* ==================================================================
+=======
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
    NavBar
    ================================================================== */
 
@@ -113,6 +116,7 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDyslexicFont, setIsDyslexicFont] = useState(false);
 
+<<<<<<< HEAD
   /* Apply font globally */
   useEffect(() => {
     const root = document.documentElement;
@@ -122,11 +126,46 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
   }, [isDyslexicFont]);
 
   /* History tracking */
+=======
+  /* ==================================================================
+     🔥 BULLETPROOF GLOBAL FONT SWITCH
+     ================================================================== */
+  useEffect(() => {
+    const styleId = "dynamic-font-style";
+    let styleTag = document.getElementById(styleId);
+
+    if (!styleTag) {
+      styleTag = document.createElement("style");
+      styleTag.id = styleId;
+      document.head.appendChild(styleTag);
+    }
+
+    if (isDyslexicFont) {
+      styleTag.innerHTML = `
+        * {
+          font-family: 'OpenDyslexic', sans-serif !important;
+        }
+      `;
+    } else {
+      styleTag.innerHTML = `
+        * {
+          font-family: 'Inter', system-ui, sans-serif !important;
+        }
+      `;
+    }
+  }, [isDyslexicFont]);
+
+  /* ==================================================================
+     History tracking
+     ================================================================== */
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
   const historyIdx = window.history.state?.idx ?? 0;
   const maxIdx = useRef(historyIdx);
 
   useEffect(() => {
-    if (historyIdx > maxIdx.current) maxIdx.current = historyIdx;
+    if (historyIdx > maxIdx.current) {
+      maxIdx.current = historyIdx;
+    }
   }, [historyIdx]);
 
   const canGoBack = historyIdx > 0;
@@ -134,25 +173,54 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
 
   return (
     <nav className="navbar">
+<<<<<<< HEAD
       {/* Desktop Title */}
       <span className="navbar-title navbar-desktop-only">
         MorphoMinds
       </span>
 
       {/* Desktop Controls */}
+=======
+
+      {/* Desktop Title */}
+      <span className="navbar-title navbar-desktop-only">
+        MorphoMinds
+      </span>
+
+      {/* Desktop Navigation Slab */}
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
       {!hideControls && (
         <div className="navbar-slab navbar-desktop-only">
-          <button className="navbar-slab-btn" onClick={() => navigate(-1)} disabled={!canGoBack}>
+          <button
+            className="navbar-slab-btn"
+            onClick={() => navigate(-1)}
+            disabled={!canGoBack}
+          >
             <BackIcon />
           </button>
 
+<<<<<<< HEAD
           <button className="navbar-slab-btn" onClick={() => navigate(1)} disabled={!canGoForward}>
+=======
+          <button
+            className="navbar-slab-btn"
+            onClick={() => navigate(1)}
+            disabled={!canGoForward}
+          >
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
             <ForwardIcon />
           </button>
 
           <div className="navbar-slab-divider" />
 
+<<<<<<< HEAD
           <button className="navbar-slab-btn" onClick={onProfileOpen}>
+=======
+          <button
+            className="navbar-slab-btn"
+            onClick={onProfileOpen}
+          >
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
             <ProfileIcon />
           </button>
 
@@ -162,12 +230,36 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
 
       {/* Right Controls */}
       <div className="navbar-desktop-only navbar-right-controls">
+<<<<<<< HEAD
         <button
           className="navbar-theme-btn navbar-font-toggle"
           onClick={() => setIsDyslexicFont((p) => !p)}
         >
           {isDyslexicFont ? <FontDyslexicIcon /> : <FontDefaultIcon />}
         </button>
+=======
+
+        {/* Dyslexia Toggle */}
+        <div className="navbar-dyslexia-toggle">
+
+          <div className="slider-wrapper">
+            <button
+              className={`toggle-switch ${isDyslexicFont ? "active" : ""}`}
+              onClick={() => setIsDyslexicFont(prev => !prev)}
+              aria-label="Toggle Dyslexia Mode"
+            >
+              <span className="toggle-thumb" />
+            </button>
+          </div>
+
+          <div className="label-wrapper">
+            <span className="toggle-label">
+              Dyslexia Mode
+            </span>
+          </div>
+
+        </div>
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
 
         <button
           className="navbar-theme-btn"
@@ -175,9 +267,14 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
         >
           {isDark ? <MoonSVG /> : <SunSVG />}
         </button>
+
       </div>
 
+<<<<<<< HEAD
       {/* Mobile Back */}
+=======
+      {/* Mobile Back Button */}
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
       {!hideControls && (
         <button
           className="navbar-hamburger navbar-mobile-only"
@@ -199,6 +296,7 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
         {menuOpen ? <CloseIcon /> : <MenuIcon />}
       </button>
 
+<<<<<<< HEAD
       {/* Mobile Dropdown */}
       {menuOpen && (
         <div className="navbar-dropdown">
@@ -240,6 +338,8 @@ const NavBar = ({ onProfileOpen, hideControls }: NavBarProps) => {
           </button>
         </div>
       )}
+=======
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
     </nav>
   );
 };
