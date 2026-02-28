@@ -1,76 +1,93 @@
 import React, { useRef, useEffect, useState } from "react";
+
 import SceneBackground from "@/components/layout/SceneBackground";
-import SignBoard from "@/components/ui/SignBoard";
 
 import "@/components/common/level-page.css";
 import "@/components/common/board-content.css";
 
-const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 const WritingNumbersLevel1 = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [selectedNumber, setSelectedNumber] = useState("0");
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPos, setLastPos] = useState<{ x: number; y: number } | null>(null);
+  const [selectedNumber, setSelectedNumber] = useState("1");
+  const [numberImageData, setNumberImageData] =
+    useState<Uint8ClampedArray | null>(null);
 
+  /* ================= DRAW NUMBER ================= */
   useEffect(() => {
     drawNumber();
   }, [selectedNumber]);
 
   const drawNumber = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
+  const canvas = canvasRef.current;
+  const ctx = canvas?.getContext("2d");
+  if (!canvas || !ctx) return;
 
-    canvas.width = 400;
-    canvas.height = 300;
+  canvas.width = 400;
+  canvas.height = 350;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.font = "bold 160px 'OpenDyslexic', sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
+  // 🔥 Dynamic font size (70% of canvas height)
+  const fontSize = canvas.height * 0.7;
+  ctx.font = `bold ${fontSize}px 'OpenDyslexic', sans-serif`;
 
-    ctx.fillStyle = "white";
-    ctx.fillText(selectedNumber, centerX, centerY);
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
 
-    ctx.strokeStyle = "#3b2a1a";
-    ctx.lineWidth = 3;
-    ctx.strokeText(selectedNumber, centerX, centerY);
-  };
+  ctx.fillStyle = "white";
+  ctx.fillText(selectedNumber, centerX, centerY);
 
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 7;
+  ctx.setLineDash([]);
+  ctx.strokeText(selectedNumber, centerX, centerY);
+
+  setNumberImageData(
+    ctx.getImageData(0, 0, canvas.width, canvas.height).data
+  );
+};
+
+  /* ================= DRAWING ================= */
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     setIsDrawing(true);
     const rect = e.currentTarget.getBoundingClientRect();
-    setLastPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setLastPos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !lastPos) return;
+    if (!isDrawing || !lastPos || !numberImageData) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!ctx || !canvas) return;
 
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = Math.floor(e.clientX - rect.left);
+    const y = Math.floor(e.clientY - rect.top);
 
-    const pixel = ctx.getImageData(x, y, 1, 1).data;
-    const isInsideWhite =
-      pixel[0] === 255 &&
-      pixel[1] === 255 &&
-      pixel[2] === 255 &&
-      pixel[3] === 255;
+    const idx = (y * canvas.width + x) * 4;
+    const isInside =
+      numberImageData[idx] === 255 &&
+      numberImageData[idx + 1] === 255 &&
+      numberImageData[idx + 2] === 255 &&
+      numberImageData[idx + 3] === 255;
 
     ctx.beginPath();
     ctx.moveTo(lastPos.x, lastPos.y);
     ctx.lineTo(x, y);
-    ctx.strokeStyle = isInsideWhite ? "green" : "red";
+    ctx.strokeStyle = isInside ? "green" : "red";
     ctx.lineWidth = 4;
+    ctx.setLineDash([]);
     ctx.stroke();
 
     setLastPos({ x, y });
@@ -85,21 +102,26 @@ const WritingNumbersLevel1 = () => {
     drawNumber();
   };
 
+  /* ================= UI ================= */
   return (
     <SceneBackground>
- 
-        <div className="level-container">
-          <div className="level-card wide fade-in-up">
+      <div className="level-container">
+        <div className="level-card wide fade-in-up">
 
-            <span className="level-nail level-nail-tl" />
-            <span className="level-nail level-nail-tr" />
-            <span className="level-nail level-nail-bl" />
-            <span className="level-nail level-nail-br" />
+          {/* Nails */}
+          <span className="level-nail level-nail-tl" />
+          <span className="level-nail level-nail-tr" />
+          <span className="level-nail level-nail-bl" />
+          <span className="level-nail level-nail-br" />
 
-            <h1 className="level-title">✏️ Number Writing — Level 1</h1>
-            <p className="level-desc">
-              Trace the number carefully. Green means correct, red means outside the guide.
-            </p>
+          {/* Title */}
+          <h1 className="level-title">✏️ Number Tracing</h1>
+          <p className="level-desc">
+            Choose a number and trace it carefully
+          </p>
+
+          {/* Picker + Canvas */}
+          <div className="level-row">
 
             {/* Number Picker */}
             <div className="level-picker">
@@ -121,6 +143,8 @@ const WritingNumbersLevel1 = () => {
               <canvas
                 ref={canvasRef}
                 className="level-canvas"
+                width={300}
+                height={250}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
@@ -136,7 +160,7 @@ const WritingNumbersLevel1 = () => {
 
           </div>
         </div>
-      
+      </div>
     </SceneBackground>
   );
 };

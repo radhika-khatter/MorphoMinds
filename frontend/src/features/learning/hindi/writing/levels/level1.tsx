@@ -27,31 +27,41 @@ const WritingHindiConsonants = () => {
 
   /* ================= DRAW LETTER ================= */
   const drawLetter = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
+  const canvas = canvasRef.current;
+  const ctx = canvas?.getContext("2d");
+  if (!canvas || !ctx) return;
 
-    canvas.width = 300;
-    canvas.height = 250;
+  // Canvas size
+  canvas.width = 300;
+  canvas.height = 250;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.font = "bold 130px 'Noto Sans Devanagari', sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 
-    ctx.fillStyle = "white";
-    ctx.fillText(selectedLetter, 150, 125);
+  // 🔥 Dynamic font size (70% of canvas height)
+  const fontSize = canvas.height * 0.7;
+  ctx.font = `bold ${fontSize}px 'Noto Sans Devanagari', sans-serif`;
 
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 3;
-    ctx.setLineDash([]);
-    ctx.strokeText(selectedLetter, 150, 125);
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
 
-    setLetterImageData(
-      ctx.getImageData(0, 0, canvas.width, canvas.height).data
-    );
-  };
+  // Fill letter
+  ctx.fillStyle = "white";
+  ctx.fillText(selectedLetter, centerX, centerY);
+
+  // Stroke letter (guide)
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 4;
+  ctx.setLineDash([]);
+  ctx.strokeText(selectedLetter, centerX, centerY);
+
+  // Save image data for tracing validation
+  setLetterImageData(
+    ctx.getImageData(0, 0, canvas.width, canvas.height).data
+  );
+};
 
   /* ================= DRAWING ================= */
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {

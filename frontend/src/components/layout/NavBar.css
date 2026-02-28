@@ -318,4 +318,97 @@
         width: 32px;
         height: 32px;
     }
+<<<<<<< HEAD
+}
+/* ================================================================
+   FONT TOGGLE — LIGHT: BLACK | DARK: WHITE
+   ================================================================ */
+
+/* Light mode (default) */
+.navbar-theme-btn.navbar-font-toggle {
+    filter: none !important;     /* remove sketch filter */
+    color: #000 !important;      /* BLACK */
+}
+
+/* SVG + text inside font icon */
+.navbar-theme-btn.navbar-font-toggle svg,
+.navbar-theme-btn.navbar-font-toggle text {
+    fill: #000 !important;       /* BLACK */
+}
+
+/* Dark mode */
+.dark .navbar-theme-btn.navbar-font-toggle {
+    filter: none !important;
+    color: #ffffff !important;   /* WHITE */
+}
+
+.dark .navbar-theme-btn.navbar-font-toggle svg,
+.dark .navbar-theme-btn.navbar-font-toggle text {
+    fill: #ffffff !important;    /* WHITE */
+}
+/* Default font */
+
+/* ===============================
+   COMMUNITY BUTTON FIX
+   =============================== */
+
+.navbar-community-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+}
+
+.navbar-community-btn span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+/* ================================================================
+   COMMUNITY BUTTON — SLAB STYLE EXTENSION
+   ================================================================ */
+
+.navbar-community-btn {
+  width: auto;                 /* allow text */
+  min-width: 110px;
+  padding: 0 14px;
+  gap: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Icon inside */
+.navbar-community-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Text inside */
+.navbar-community-btn span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Hover enhancement */
+.navbar-community-btn:hover:not(:disabled) {
+  background: #e3b673;
+}
+
+/* Dark mode */
+.dark .navbar-community-btn {
+  background: #7a5a38;
+  border-color: #3a2818;
+  color: #f0e6d0;
+}
+
+.dark .navbar-community-btn:hover:not(:disabled) {
+  background: #8d6a44;
+=======
+>>>>>>> df123e92931fdbe3042b6afcec904b228ce81288
 }
