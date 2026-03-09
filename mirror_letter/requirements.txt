@@ -1,0 +1,14 @@
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic==2.9.2
+
+tensorflow==2.20.0
+numpy==1.26.4
+scipy==1.11.4
+h5py==3.11.0
+
+pillow==10.4.0
+opencv-python==4.8.1.78
+
+torch==2.2.2
+#uvicorn inference.app:app --reload --port 8001

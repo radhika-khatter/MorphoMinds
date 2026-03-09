@@ -1,0 +1,476 @@
+/* ==================================================================
+   HOME PAGE — page-specific styles
+   (Sky/board/creatures are now in SceneBackground.css & SignBoard.css)
+   ================================================================== */
+
+/* ---------- Welcome (left side of board) ---------- */
+.welcome-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    text-shadow: 2px 2px 0 #6b3a1f;
+    margin-bottom: 12px;
+}
+
+.dark .welcome-title {
+    color: #f0e6d0;
+    text-shadow: 2px 2px 0 #2a1a0a;
+}
+
+.welcome-subtitle {
+    font-size: 1rem;
+    color: #fef3e0;
+    line-height: 1.6;
+}
+
+.dark .welcome-subtitle {
+    color: rgba(240, 230, 208, 0.7);
+}
+
+/* ---------- Divider ---------- */
+.board-divider {
+    width: 3px;
+    background: rgba(107, 58, 31, 0.3);
+    border-radius: 2px;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.dark .board-divider {
+    background: rgba(180, 140, 80, 0.2);
+}
+
+/* ---------- Auth Section ---------- */
+.auth-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.auth-form {
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tab Buttons */
+.auth-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 16px;
+    background: rgba(107, 58, 31, 0.25);
+    border-radius: 10px;
+    padding: 3px;
+    filter: url(#sketchy-light);
+}
+
+.dark .auth-tabs {
+    background: rgba(180, 140, 80, 0.15);
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 9px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'OpenDyslexic', sans-serif;
+}
+
+.auth-tab.active {
+    background: #fff;
+    color: #6b3a1f;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.dark .auth-tab {
+    color: rgba(240, 230, 208, 0.4);
+}
+
+.dark .auth-tab.active {
+    background: #6b4f30;
+    color: #f0e6d0;
+}
+
+/* Sketch wrapper — holds the visible border/bg with filter, input sits on top */
+.sketch-wrap {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.sketch-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    border: 2px solid rgba(107, 58, 31, 0.4);
+    background: rgba(255, 255, 255, 0.9);
+    filter: url(#sketchy-light);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.dark .sketch-wrap::before {
+    background: rgba(80, 60, 35, 0.6);
+    border-color: rgba(180, 140, 80, 0.35);
+}
+
+.sketch-wrap:focus-within::before {
+    border-color: #6b3a1f;
+    box-shadow: 0 0 0 3px rgba(107, 58, 31, 0.15);
+}
+
+.dark .sketch-wrap:focus-within::before {
+    border-color: #b48c50;
+    box-shadow: 0 0 0 3px rgba(180, 140, 80, 0.15);
+}
+
+/* Form inputs */
+.auth-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: #3b2a1a;
+    font-size: 0.9rem;
+    font-family: 'OpenDyslexic', sans-serif;
+    outline: none;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.auth-input::placeholder {
+    color: #a08060;
+}
+
+.dark .auth-input {
+    color: #f0e6d0;
+}
+
+.dark .auth-input::placeholder {
+    color: rgba(200, 175, 130, 0.5);
+}
+
+/* Submit button */
+.auth-submit {
+    position: relative;
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'OpenDyslexic', sans-serif;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+    margin-top: 4px;
+    background: transparent;
+    color: #4a2515;
+    z-index: 1;
+}
+
+.auth-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    border: 3px solid #4a2515;
+    background: #e8a838;
+    box-shadow: 2px 3px 0 #4a2515;
+    filter: url(#sketchy-light);
+    z-index: -1;
+    transition: box-shadow 0.25s ease;
+}
+
+.auth-submit:hover {
+    transform: translateY(-2px);
+}
+
+.auth-submit:hover::before {
+    box-shadow: 2px 5px 0 #4a2515;
+}
+
+.auth-submit:active {
+    transform: translateY(1px);
+}
+
+.auth-submit:active::before {
+    box-shadow: 1px 1px 0 #4a2515;
+}
+
+.dark .auth-submit {
+    color: #1a0f05;
+}
+
+.dark .auth-submit::before {
+    background: #b48c50;
+    border-color: #2a1a0a;
+    box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+/* Password toggle */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #a08060;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    color: #6b3a1f;
+}
+
+.dark .password-toggle {
+    color: rgba(180, 160, 120, 0.6);
+}
+
+.dark .password-toggle:hover {
+    color: #b48c50;
+}
+
+/* ================================================================
+   CUSTOM HAND-DRAWN DIALOG
+   ================================================================ */
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+    animation: dialogFadeIn 0.25s ease-out;
+    padding: 20px;
+}
+
+@keyframes dialogFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.dialog-box {
+    position: relative;
+    max-width: 380px;
+    width: 100%;
+    padding: 28px 24px 22px;
+    text-align: center;
+    font-family: 'OpenDyslexic', sans-serif;
+    animation: dialogPop 0.3s ease-out;
+}
+
+@keyframes dialogPop {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.dialog-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #d4a056;
+    border: 4px solid #6b3a1f;
+    border-radius: 14px;
+    box-shadow: 4px 6px 0 #6b3a1f;
+    filter: url(#sketchy);
+    z-index: -1;
+}
+
+.dark .dialog-box::before {
+    background: #5a4230;
+    border-color: #3a2818;
+    box-shadow: 4px 6px 0 #2a1a0a;
+}
+
+.dialog-nail {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #8b8b8b;
+    border-radius: 50%;
+    border: 2px solid #555;
+    z-index: 2;
+}
+
+.dialog-nail-tl {
+    top: 8px;
+    left: 8px;
+}
+
+.dialog-nail-tr {
+    top: 8px;
+    right: 8px;
+}
+
+.dark .dialog-nail {
+    background: #5a5a5a;
+    border-color: #333;
+}
+
+.dialog-message {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #fff;
+    text-shadow: 1px 1px 0 #6b3a1f;
+    margin-bottom: 18px;
+    word-break: break-word;
+}
+
+.dark .dialog-message {
+    color: #f0e6d0;
+    text-shadow: 1px 1px 0 #2a1a0a;
+}
+
+.dialog-close {
+    position: relative;
+    padding: 9px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: 'OpenDyslexic', sans-serif;
+    cursor: pointer;
+    background: transparent;
+    color: #4a2515;
+    z-index: 1;
+    transition: transform 0.2s ease;
+}
+
+.dialog-close::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    border: 3px solid #4a2515;
+    background: #e8a838;
+    box-shadow: 2px 3px 0 #4a2515;
+    filter: url(#sketchy-light);
+    z-index: -1;
+}
+
+.dialog-close:hover {
+    transform: translateY(-1px);
+}
+
+.dialog-close:active {
+    transform: translateY(1px);
+}
+
+.dark .dialog-close {
+    color: #1a0f05;
+}
+
+.dark .dialog-close::before {
+    background: #b48c50;
+    border-color: #2a1a0a;
+    box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+/* ================================================================
+   RESPONSIVE — Tablet
+   ================================================================ */
+@media (max-width: 768px) {
+    .welcome-section {
+        text-align: center;
+    }
+
+    .welcome-title {
+        font-size: 1.7rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .board-divider {
+        width: 100%;
+        height: 3px;
+    }
+
+    .dialog-box {
+        max-width: 320px;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — Small phone
+   ================================================================ */
+@media (max-width: 480px) {
+    .welcome-title {
+        font-size: 1.4rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .auth-tab {
+        font-size: 0.8rem;
+        padding: 7px 0;
+    }
+
+    .auth-input {
+        padding: 9px 12px;
+        font-size: 0.82rem;
+    }
+
+    .auth-submit {
+        padding: 9px;
+        font-size: 0.9rem;
+    }
+
+    .auth-form {
+        min-height: 240px;
+    }
+
+    .dialog-box {
+        max-width: 300px;
+        padding: 22px 18px 18px;
+    }
+
+    .dialog-message {
+        font-size: 0.85rem;
+    }
+}

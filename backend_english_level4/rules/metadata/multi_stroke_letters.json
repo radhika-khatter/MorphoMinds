@@ -1,0 +1,21 @@
+{
+  "A": { "strokes": 3 },
+  "B": { "strokes": 3 },
+  "E": { "strokes": 4 },
+  "F": { "strokes": 3 },
+  "H": { "strokes": 3 },
+  "K": { "strokes": 3 },
+  "M": { "strokes": 4 },
+  "N": { "strokes": 3 },
+  "R": { "strokes": 3 },
+  "T": { "strokes": 2 },
+  "X": { "strokes": 2 },
+  "Y": { "strokes": 2 },
+
+  "a": { "strokes": 2 },
+  "h": { "strokes": 2 },
+  "k": { "strokes": 2 },
+  "m": { "strokes": 3 },
+  "n": { "strokes": 2 },
+  "r": { "strokes": 2 }
+}

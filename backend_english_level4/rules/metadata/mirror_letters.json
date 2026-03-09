@@ -1,0 +1,6 @@
+{
+  "b": { "strokes": 2, "loop_side": "right", "mirror": "d" },
+  "d": { "strokes": 2, "loop_side": "left",  "mirror": "b" },
+  "p": { "strokes": 2, "loop_side": "right", "mirror": "q" },
+  "q": { "strokes": 2, "loop_side": "left",  "mirror": "p" }
+}

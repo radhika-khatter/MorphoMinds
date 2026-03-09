@@ -1,0 +1,16 @@
+{
+  "C": { "max_strokes": 1 },
+  "O": { "max_strokes": 1 },
+  "S": { "max_strokes": 1 },
+  "U": { "max_strokes": 1 },
+  "V": { "max_strokes": 2 },
+  "W": { "max_strokes": 2 },
+  "Z": { "max_strokes": 3 },
+
+  "c": { "max_strokes": 1 },
+  "o": { "max_strokes": 1 },
+  "s": { "max_strokes": 1 },
+  "u": { "max_strokes": 1 },
+  "v": { "max_strokes": 1 },
+  "w": { "max_strokes": 2 }
+}

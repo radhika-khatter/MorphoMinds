@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Digit Trainer (Canvas + CNN)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 16px; }
+    .row { display: flex; gap: 16px; align-items: flex-start; }
+    canvas { border: 2px solid #111; background: #fff; cursor: crosshair; }
+    .panel { min-width: 360px; }
+    .btns { display: flex; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
+    button { padding: 8px 12px; }
+    select { padding: 6px; }
+    pre {
+      background: #0b0b0b; color: #eaeaea;
+      padding: 12px; border-radius: 10px;
+      white-space: pre-wrap;
+    }
+    .hint { color: #444; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h2>Digit Trainer (Browser Canvas Output)</h2>
+  <div class="hint" id="statusLine">Loading status...</div>
+
+  <div class="row">
+    <div>
+      <canvas id="pad" width="420" height="420"></canvas>
+      <div class="btns">
+        <label>
+          Digit:
+          <select id="target">
+            <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+          </select>
+        </label>
+
+        <button id="clearBtn">Clear</button>
+        <button id="checkBtn">Check (Strokes + CNN)</button>
+        <button id="saveBtn">Save Template</button>
+      </div>
+      <div class="hint">Draw with mouse. Each mouse press-drag-release = one stroke.</div>
+    </div>
+
+    <div class="panel">
+      <h3>Output</h3>
+      <pre id="out">Draw the digit, then click Check.</pre>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("pad");
+  const ctx = canvas.getContext("2d");
+  const out = document.getElementById("out");
+  const targetEl = document.getElementById("target");
+  const statusLine = document.getElementById("statusLine");
+
+  // Drawing config
+  const LINE_W = 6;
+
+  // Data: strokes = [ stroke1, stroke2, ... ], each stroke = [ [x,y], [x,y], ... ]
+  let strokes = [];
+  let current = null;
+  let drawing = false;
+
+  function setOutput(lines) {
+    if (Array.isArray(lines)) out.textContent = lines.join("\n");
+    else out.textContent = String(lines);
+  }
+
+  function resetCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = LINE_W;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "#000";
+  }
+
+  // Redraw strokes with per-stroke coloring (green/red)
+  function redrawWithColors(perStrokeOk) {
+    resetCanvas();
+    for (let i = 0; i < strokes.length; i++) {
+      const s = strokes[i];
+      if (!s || s.length < 2) continue;
+      const ok = perStrokeOk && perStrokeOk[i] !== undefined ? perStrokeOk[i] : null;
+      ctx.strokeStyle = ok === null ? "#000" : (ok ? "green" : "red");
+      ctx.beginPath();
+      ctx.moveTo(s[0][0], s[0][1]);
+      for (let k = 1; k < s.length; k++) ctx.lineTo(s[k][0], s[k][1]);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = "#000";
+  }
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    return [e.clientX - r.left, e.clientY - r.top];
+  }
+
+  canvas.addEventListener("mousedown", (e) => {
+    drawing = true;
+    current = [];
+    const [x,y] = getPos(e);
+    current.push([x,y]);
+  });
+
+  canvas.addEventListener("mousemove", (e) => {
+    if (!drawing || !current) return;
+    const [x,y] = getPos(e);
+    const last = current[current.length - 1];
+    current.push([x,y]);
+
+    // live draw black
+    ctx.strokeStyle = "#000";
+    ctx.beginPath();
+    ctx.moveTo(last[0], last[1]);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!drawing) return;
+    drawing = false;
+    if (current && current.length >= 2) strokes.push(current);
+    current = null;
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    strokes = [];
+    current = null;
+    resetCanvas();
+    setOutput("Cleared. Draw again.");
+  });
+
+  async function postJSON(url, body) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const msg = data?.message || data?.messages?.join("\n") || ("Request failed: " + res.status);
+      throw new Error(msg);
+    }
+    return data;
+  }
+
+  document.getElementById("saveBtn").addEventListener("click", async () => {
+    try {
+      const target = targetEl.value;
+      const data = await postJSON("/save_template", { target, strokes });
+      setOutput([data.message || "Saved ✅"]);
+      // after save, redraw in black
+      redrawWithColors(null);
+    } catch (err) {
+      setOutput(String(err.message || err));
+    }
+  });
+
+  document.getElementById("checkBtn").addEventListener("click", async () => {
+    try {
+      const target = targetEl.value;
+      const data = await postJSON("/check", {
+        target,
+        strokes,
+        canvas_size: canvas.width
+      });
+
+      // Color strokes if we got per_stroke_ok
+      if (data.per_stroke_ok && data.per_stroke_ok.length) {
+        redrawWithColors(data.per_stroke_ok);
+      } else {
+        // if no template, keep black
+        redrawWithColors(null);
+      }
+
+      setOutput(data.messages || ["Done"]);
+    } catch (err) {
+      setOutput(String(err.message || err));
+    }
+  });
+
+  async function loadStatus() {
+    try {
+      const res = await fetch("/status");
+      const data = await res.json();
+      statusLine.textContent =
+        `Device: ${data.device} | Model: ${data.model_status} | Templates saved: ${data.templates.join(", ") || "none"}`;
+    } catch {
+      statusLine.textContent = "Status load failed.";
+    }
+  }
+
+  // init
+  resetCanvas();
+  loadStatus();
+})();
+</script>
+</body>
+</html>

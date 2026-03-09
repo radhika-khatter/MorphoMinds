@@ -1,0 +1,294 @@
+/* ==================================================================
+   NavBar
+   ================================================================== */
+
+.navbar {
+  position: relative;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 24px;
+  box-sizing: border-box;
+}
+
+/* ---------- Right Controls ---------- */
+
+.navbar-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ---------- Title ---------- */
+
+.navbar-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 2px 2px 0 #6b3a1f;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.dark .navbar-title {
+  color: #f0e6d0;
+  text-shadow: 2px 2px 0 #2a1a0a;
+}
+
+/* ==================================================================
+   Wooden Slab
+   ================================================================== */
+
+.navbar-slab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+@media (min-width: 769px) {
+  .navbar-slab:not(.navbar-slab-mobile) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.navbar-slab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #c89445;
+  border: 3px solid #6b3a1f;
+  border-radius: 12px;
+  box-shadow: 2px 3px 0 #6b3a1f;
+  filter: url(#sketchy);
+  z-index: -1;
+}
+
+.dark .navbar-slab::before {
+  background: #5a4230;
+  border-color: #3a2818;
+  box-shadow: 2px 3px 0 #2a1a0a;
+}
+
+/* ==================================================================
+   Slab Buttons
+   ================================================================== */
+
+.navbar-slab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 8px;
+  border: 2.5px solid #6b3a1f;
+  background: #d4a056;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 1px 2px 0 #6b3a1f;
+}
+
+.navbar-slab-btn:hover:not(:disabled) {
+  background: #deb06a;
+  transform: translateY(-2px);
+  box-shadow: 1px 4px 0 #6b3a1f;
+}
+
+.navbar-slab-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 0 0 #6b3a1f;
+}
+
+.navbar-slab-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.dark .navbar-slab-btn {
+  background: #7a5a38;
+  border-color: #3a2818;
+  color: #f0e6d0;
+  box-shadow: 1px 2px 0 #2a1a0a;
+}
+
+.dark .navbar-slab-btn:hover:not(:disabled) {
+  background: #8d6a44;
+}
+
+/* Divider */
+
+.navbar-slab-divider {
+  width: 2px;
+  height: 24px;
+  margin: 0 2px;
+  border-radius: 1px;
+  background: rgba(107, 58, 31, 0.3);
+}
+
+.dark .navbar-slab-divider {
+  background: rgba(180, 140, 80, 0.2);
+}
+
+/* ==================================================================
+   COMMUNITY BUTTON (FIXED)
+   ================================================================== */
+
+.navbar-community-btn {
+  width: auto;
+  min-width: 120px;
+  padding: 0 14px;
+  gap: 8px;
+
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.navbar-community-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.navbar-community-btn span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* ==================================================================
+   Theme Button
+   ================================================================== */
+
+.navbar-theme-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  filter: url(#sketchy-heavy);
+}
+
+.navbar-theme-btn:hover {
+  transform: scale(1.1);
+}
+
+.navbar-theme-btn svg {
+  width: 60px;
+  height: 60px;
+}
+
+/* ==================================================================
+   Hamburger
+   ================================================================== */
+
+.navbar-hamburger {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 2.5px solid #6b3a1f;
+  background: #d4a056;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 1px 2px 0 #6b3a1f;
+}
+
+/* ==================================================================
+   Responsive
+   ================================================================== */
+
+.navbar-desktop-only {
+  display: flex;
+}
+
+.navbar-mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar-desktop-only {
+    display: none !important;
+  }
+
+  .navbar-mobile-only {
+    display: flex;
+  }
+
+  .navbar-title {
+    font-size: 1.15rem;
+  }
+
+  .navbar {
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-title {
+    font-size: 0.95rem;
+  }
+
+  .navbar-slab-btn {
+    height: 32px;
+  }
+}
+
+
+
+/* ===============================
+   Dyslexia Font Toggle
+   =============================== */
+
+.navbar-dyslexia-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-track {
+  width: 42px;
+  height: 22px;
+  background: var(--border-muted, #ccc);
+  border-radius: 999px;
+  position: relative;
+  transition: background 0.25s ease;
+}
+
+.toggle-track.on {
+  background: #4f46e5; /* Indigo / accessible */
+}
+
+.toggle-thumb {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.25s ease;
+}
+
+.toggle-track.on .toggle-thumb {
+  transform: translateX(20px);
+}
+
+.toggle-label {
+  font-size: 11px;
+  opacity: 0.75;
+  letter-spacing: 0.3px;
+}
+

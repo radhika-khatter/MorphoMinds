@@ -1,0 +1,286 @@
+/* ==================================================================
+   Index (Dashboard) Page — page-specific styles
+   (Sky/board/creatures are now in SceneBackground.css & SignBoard.css)
+   ================================================================== */
+
+/* ---------- Dashboard Content (inside signboard) ---------- */
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Welcome Greeting ---------- */
+.dashboard-greeting {
+    text-align: center;
+}
+
+.dashboard-greeting h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 2px 2px 0 #6b3a1f;
+    margin-bottom: 4px;
+}
+
+.dashboard-greeting p {
+    font-size: 0.9rem;
+    color: #fef3e0;
+    line-height: 1.4;
+}
+
+.dark .dashboard-greeting h1 {
+    color: #f0e6d0;
+    text-shadow: 2px 2px 0 #2a1a0a;
+}
+
+.dark .dashboard-greeting p {
+    color: rgba(240, 230, 208, 0.7);
+}
+
+/* ---------- Subject Tabs ---------- */
+.subject-tabs {
+    display: flex;
+    background: rgba(107, 58, 31, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    filter: url(#sketchy-light);
+}
+
+.subject-tab {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    font-family: 'OpenDyslexic', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.subject-tab.active {
+    background: rgba(107, 58, 31, 0.35);
+    color: #fff;
+}
+
+.subject-tab:hover:not(.active) {
+    background: rgba(107, 58, 31, 0.2);
+    color: #fff;
+}
+
+.dark .subject-tabs {
+    background: rgba(180, 140, 80, 0.15);
+}
+
+.dark .subject-tab {
+    color: rgba(240, 230, 208, 0.5);
+}
+
+.dark .subject-tab.active {
+    background: rgba(180, 140, 80, 0.3);
+    color: #f0e6d0;
+}
+
+/* ---------- Progress Cards ---------- */
+.progress-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.progress-card {
+    position: relative;
+    padding: 18px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: 'OpenDyslexic', sans-serif;
+    z-index: 1;
+}
+
+.progress-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    border: 3px solid rgba(107, 58, 31, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    filter: url(#sketchy-light);
+    z-index: -1;
+}
+
+.progress-card:hover {
+    transform: translateY(-3px);
+}
+
+.progress-card-icon {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.progress-card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 12px;
+}
+
+.dark .progress-card::before {
+    border-color: rgba(180, 140, 80, 0.3);
+    background: rgba(90, 66, 48, 0.3);
+}
+
+.dark .progress-card-title {
+    color: #f0e6d0;
+    text-shadow: 1px 1px 0 #2a1a0a;
+}
+
+/* Progress bar */
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(107, 58, 31, 0.2);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: #e8a838;
+    transition: width 0.6s ease-out;
+}
+
+.dark .progress-bar-bg {
+    background: rgba(180, 140, 80, 0.15);
+}
+
+.dark .progress-bar-fill {
+    background: #b48c50;
+}
+
+.progress-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 4px;
+}
+
+.dark .progress-bar-label {
+    color: rgba(240, 230, 208, 0.6);
+}
+
+/* ================================================================
+   RESPONSIVE — Tablet (max 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+    .dashboard-greeting h1 {
+        font-size: 1.5rem;
+    }
+
+    .progress-cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — Small phone (max 480px)
+   ================================================================ */
+@media (max-width: 480px) {
+    .dashboard-greeting h1 {
+        font-size: 1.3rem;
+    }
+
+    .subject-tab {
+        font-size: 0.78rem;
+        padding: 8px 0;
+    }
+
+    .progress-card {
+        padding: 14px 12px;
+    }
+
+    .progress-card-title {
+        font-size: 0.8rem;
+    }
+}
+/* ---------- Practice Game ---------- */
+.practice-game {
+    margin-top: 22px;
+}
+
+.practice-card {
+    position: relative;
+    width: 100%;
+    padding: 20px 18px;
+    border-radius: 14px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    text-align: center;
+    font-family: 'OpenDyslexic', sans-serif;
+    transition: transform 0.25s ease;
+    z-index: 1;
+}
+
+.practice-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    border: 3px dashed rgba(107, 58, 31, 0.4);
+    background: rgba(255, 255, 255, 0.18);
+    filter: url(#sketchy-light);
+    z-index: -1;
+}
+
+.practice-card:hover {
+    transform: translateY(-3px);
+}
+
+.practice-icon {
+    font-size: 2rem;
+    margin-bottom: 6px;
+}
+
+.practice-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);
+    margin-bottom: 4px;
+}
+
+.practice-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.4;
+}
+
+.dark .practice-card::before {
+    border-color: rgba(180, 140, 80, 0.35);
+    background: rgba(90, 66, 48, 0.3);
+}
+
+.dark .practice-title {
+    color: #f0e6d0;
+    text-shadow: 1px 1px 0 #2a1a0a;
+}
+
+.dark .practice-desc {
+    color: rgba(240, 230, 208, 0.65);
+}
