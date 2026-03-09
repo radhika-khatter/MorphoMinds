@@ -63,10 +63,10 @@ git clone https://github.com/<your-username>/MorphoMinds.git
 
 ## Screenshots
 
-![Screenshot1](public/screenshots/home.png)
+![Screenshot1](frontend/public/screenshots/home.png)
 
-![Screenshot2](public/screenshots/englishwritinglevel1.png)
+![Screenshot2](frontend/public/screenshots/englishwritinglevel1.png)
 
-![Screenshot3](public/screenshots/hindiwritinglevel2.png)
+![Screenshot3](frontend/public/screenshots/hindiwritinglevel2.png)
 
-![Screenshot4](public/screenshots/englishreadinglevel4.png)
+![Screenshot4](frontend/public/screenshots/englishreadinglevel4.png)
