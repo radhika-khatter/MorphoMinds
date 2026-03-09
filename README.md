@@ -61,4 +61,12 @@ The system integrates multiple backend services, a modern React frontend, and Ma
 git clone https://github.com/<your-username>/MorphoMinds.git
 
 
-# 🏗️ System Architecture
+## Screenshots
+
+![Screenshot1](public/screenshots/home.png)
+
+![Screenshot2](public/screenshots/englishwritinglevel1.png)
+
+![Screenshot3](public/screenshots/hindiwritinglevel2.png)
+
+![Screenshot4](public/screenshots/englishreadinglevel4.png)
